@@ -1,0 +1,51 @@
+.component {
+    background-color: var(--background);
+}
+
+.container {
+    composes: container from global;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-top: calc(var(--offset-base-size) * 4);
+    padding-bottom: calc(var(--offset-base-size) * 4);
+}
+
+.nav {
+    display: flex;
+    column-gap: calc(var(--offset-base-size) * 2);
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav_left {
+    justify-content: flex-start;
+    margin-left: calc(var(--offset-base-size) * -5);
+}
+
+.nav_right {
+    justify-content: flex-end;
+    margin-right: calc(var(--offset-base-size) * -5);
+}
+
+.nav_item {}
+
+.nav_link {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--offset-base-size) * 2);
+    padding: calc(var(--offset-base-size) * 4) calc(var(--offset-base-size) * 5);
+    color: var(--text-inactive-color);
+    text-decoration: none;
+}
+
+.nav_item_active .nav_link {
+    color: var(--text-active-color);
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,47 @@
+.component {
+    display: flex;
+    flex-direction: column;
+}
+
+.pane {
+    composes: pane from global;
+}
+
+.pane_outer {
+    composes: pane_outer from global;
+    row-gap: calc(var(--offset-base-size) * 4);
+}
+
+.pane_inner {
+    composes: pane_inner from global;
+    row-gap: calc(var(--offset-base-size) * 4);
+}
+
+.item {
+    display: flex;
+    position: relative;
+}
+
+.item>svg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    cursor: grab;
+}
+
+.total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: calc(var(--offset-base-size) * 10);
+}
+
+.total_price {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--offset-base-size) * 2);
+}
+
+.total_value {}
