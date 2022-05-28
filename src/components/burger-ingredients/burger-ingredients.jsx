@@ -13,13 +13,9 @@ import {
 import styles from './burger-ingredients.module.css';
 
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
 
-const BurgerIngredients = ({ categories, ingredients }) => {
+const BurgerIngredients = ({ categories, ingredients, onModalIngredientOpen }) => {
     const [currentTab, setCurrentTab] = useState(categories[0].value);
-    const [currentIngredient, setCurrentIngredient] = useState(null);
-    const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
 
     // Ref-объект блока ингредиентов
     const pane = useRef(null);
@@ -61,10 +57,7 @@ const BurgerIngredients = ({ categories, ingredients }) => {
                 <BurgerIngredient
                     key={item._id}
                     ingredient={item}
-                    onClick={() => {
-                        setCurrentIngredient(item);
-                        setIsModalDetailsOpen(true);
-                    }}
+                    onClick={() => onModalIngredientOpen(item)}
                 />
             ));
 
@@ -95,26 +88,14 @@ const BurgerIngredients = ({ categories, ingredients }) => {
                     </div>
                 </div>
             </div>
-            {
-                isModalDetailsOpen && (
-                    <Modal
-                        title="Детали ингредиента"
-                        onClose={() => {
-                            setCurrentIngredient(null);
-                            setIsModalDetailsOpen(false);
-                        }}
-                    >
-                        <IngredientDetails ingredient={currentIngredient} />
-                    </Modal>
-                )
-            }
         </section>
     );
 };
 
 BurgerIngredients.propTypes = {
     categories: PropTypes.arrayOf(categoryPropType.isRequired).isRequired,
-    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+    onModalIngredientOpen: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;

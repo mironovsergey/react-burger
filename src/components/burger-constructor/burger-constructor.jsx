@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { ingredientPropType } from '../../utils/prop-types';
@@ -12,12 +11,7 @@ import {
 
 import styles from './burger-constructor.module.css';
 
-import OrderDetails from '../order-details/order-details';
-import Modal from '../modal/modal';
-
-const BurgerConstructor = ({ ingredients }) => {
-    const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
-
+const BurgerConstructor = ({ ingredients, onModalOrderOpen }) => {
     // Первая попавшаяся булка
     const { name: bunName, price: bunPrice, image: bunImage } = ingredients
         .filter(({ type }) => type === 'bun')[0];
@@ -46,7 +40,7 @@ const BurgerConstructor = ({ ingredients }) => {
                         <ConstructorElement
                             type="top"
                             isLocked={true}
-                            text={bunName}
+                            text={`${bunName} (верх)`}
                             price={bunPrice}
                             thumbnail={bunImage}
                         />
@@ -58,7 +52,7 @@ const BurgerConstructor = ({ ingredients }) => {
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
-                            text={bunName}
+                            text={`${bunName} (низ)`}
                             price={bunPrice}
                             thumbnail={bunImage}
                         />
@@ -73,27 +67,17 @@ const BurgerConstructor = ({ ingredients }) => {
                     </span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button
-                    type="primary"
-                    size="large"
-                    onClick={() => setIsModalDetailsOpen(true)}
-                >
+                <Button type="primary" size="large" onClick={onModalOrderOpen}>
                     <span>Оформить заказ</span>
                 </Button>
-                {
-                    isModalDetailsOpen && (
-                        <Modal onClose={() => setIsModalDetailsOpen(false)}>
-                            <OrderDetails />
-                        </Modal>
-                    )
-                }
             </div>
         </section>
     );
 };
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+    onModalOrderOpen: PropTypes.func.isRequired
 };
 
 export default BurgerConstructor;
