@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
     Logo,
     BurgerIcon,
@@ -11,7 +9,7 @@ import styles from './app-header.module.css';
 
 const AppHeader = () => {
     return (
-        <header className={styles.header}>
+        <header className={styles.component}>
             <div className={styles.container}>
                 <ul className={`${styles.nav} ${styles.nav_left}`}>
                     <li className={`${styles.nav_item} ${styles.nav_item_active}`}>

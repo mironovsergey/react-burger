@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 import { ingredientPropType } from '../../utils/prop-types';
 
@@ -9,9 +9,11 @@ import {
 
 import styles from './burger-ingredient.module.css';
 
-const BurgerIngredient = ({ ingredient: { name, image, price } }) => {
+const BurgerIngredient = ({ ingredient, onClick }) => {
+    const { name, image, price } = ingredient;
+
     return (
-        <div className={styles.ingredient}>
+        <div className={styles.component} onClick={onClick}>
             <div className={`${styles.image} ml-4 mr-4 mb-1`}>
                 <div className={styles.image_wrap}>
                     <img src={image} alt={name} />
@@ -32,7 +34,8 @@ const BurgerIngredient = ({ ingredient: { name, image, price } }) => {
 };
 
 BurgerIngredient.propTypes = {
-    ingredient: ingredientPropType.isRequired
+    ingredient: ingredientPropType.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 export default BurgerIngredient;

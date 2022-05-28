@@ -1,0 +1,30 @@
+.component {}
+
+.image {
+    display: flex;
+    justify-content: center;
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.name {
+    text-align: center;
+}
+
+.props {
+    display: flex;
+    text-align: center;
+    color: var(--text-inactive-color);
+    column-gap: calc(var(--offset-base-size) * 5);
+}
+
+.props_item {
+    flex: 1 0 0%;
+}
+
+.props_title {}
+
+.props_value {}

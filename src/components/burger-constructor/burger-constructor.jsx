@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { ingredientPropType } from '../../utils/prop-types';
@@ -12,7 +12,12 @@ import {
 
 import styles from './burger-constructor.module.css';
 
+import OrderDetails from '../order-details/order-details';
+import Modal from '../modal/modal';
+
 const BurgerConstructor = ({ ingredients }) => {
+    const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
+
     // Первая попавшаяся булка
     const { name: bunName, price: bunPrice, image: bunImage } = ingredients
         .filter(({ type }) => type === 'bun')[0];
@@ -34,7 +39,7 @@ const BurgerConstructor = ({ ingredients }) => {
         });
 
     return (
-        <section className={`${styles.constructor} pt-25 pb-25`}>
+        <section className={`${styles.component} pt-25 pb-25`}>
             <div className={styles.pane}>
                 <div className={styles.pane_outer}>
                     <div className={`${styles.item} pl-8 ml-4 mr-4`}>
@@ -68,9 +73,20 @@ const BurgerConstructor = ({ ingredients }) => {
                     </span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large">
-                    Оформить заказ
+                <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => setIsModalDetailsOpen(true)}
+                >
+                    <span>Оформить заказ</span>
                 </Button>
+                {
+                    isModalDetailsOpen && (
+                        <Modal onClose={() => setIsModalDetailsOpen(false)}>
+                            <OrderDetails />
+                        </Modal>
+                    )
+                }
             </div>
         </section>
     );
