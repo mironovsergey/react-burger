@@ -6,6 +6,7 @@ const categoryPropType = PropTypes.shape({
 });
 
 const ingredientPropType = PropTypes.shape({
+    id: PropTypes.string,
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,

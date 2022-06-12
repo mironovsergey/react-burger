@@ -3,32 +3,24 @@
     flex-direction: column;
 }
 
-.pane {
-    composes: pane from global;
+.panel {
+    composes: panel from global;
 }
 
-.pane_outer {
-    composes: pane_outer from global;
+.panel_outer {
+    composes: panel_outer from global;
     row-gap: calc(var(--offset-base-size) * 4);
 }
 
-.pane_inner {
-    composes: pane_inner from global;
+.panel_inner {
+    composes: panel_inner from global;
     row-gap: calc(var(--offset-base-size) * 4);
+    flex-grow: 1;
 }
 
 .item {
     display: flex;
     position: relative;
-}
-
-.item>svg {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    cursor: grab;
 }
 
 .total {
@@ -45,3 +37,23 @@
 }
 
 .total_value {}
+
+.dummy {
+    composes: constructor-element from global;
+    margin-left: calc(var(--offset-base-size) * 12);
+    margin-right: calc(var(--offset-base-size) * 4);
+}
+
+.dummy_hover {
+    outline: 1px solid var(--colors-interface-accent);
+}
+
+.dummy_pos_top {
+    composes: constructor-element_pos_top from global;
+    flex-grow: 0;
+}
+
+.dummy_pos_bottom {
+    composes: constructor-element_pos_bottom from global;
+    flex-grow: 0;
+}
