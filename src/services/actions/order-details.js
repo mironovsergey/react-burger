@@ -5,7 +5,7 @@ export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_ERROR = 'POST_ORDER_ERROR';
 
 export const TOGGLE_ORDER_MODAL = 'TOGGLE_ORDER_MODAL';
-export const RESET_ORDER = 'RESET_CONSTRUCTOR';
+export const RESET_ORDER = 'RESET_ORDER';
 
 // Отправить заказ
 export const postOrder = (payload) => {
@@ -14,17 +14,18 @@ export const postOrder = (payload) => {
             type: POST_ORDER_REQUEST
         });
 
-        fetchOrder(payload)
+        return fetchOrder(payload)
             .then((res) => {
                 dispatch({
                     type: POST_ORDER_SUCCESS,
                     payload: res.order
                 });
             })
-            .catch(() => {
+            .catch((err) => {
                 dispatch({
                     type: POST_ORDER_ERROR
                 });
+                throw new Error(err);
             });
     };
 };

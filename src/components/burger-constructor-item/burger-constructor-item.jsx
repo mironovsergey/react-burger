@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 
-import { ingredientPropType } from '../../utils/prop-types';
+import { ingredientFieldPropType } from '../../utils/prop-types';
 
 import {
     ConstructorElement,
@@ -75,14 +75,18 @@ const BurgerConstructorItem = ({ ingredient, index }) => {
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
-                handleClose={() => dispatch(removeIngredient(ingredient.id))}
+                handleClose={() => dispatch(removeIngredient(ingredient.key))}
             />
         </div>
     );
 };
 
+
 BurgerConstructorItem.propTypes = {
-    ingredient: ingredientPropType.isRequired,
+    ingredient: PropTypes.shape({
+        ...ingredientFieldPropType,
+        key: PropTypes.string.isRequired
+    }).isRequired,
     index: PropTypes.number.isRequired
 };
 

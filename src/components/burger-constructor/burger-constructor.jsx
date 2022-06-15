@@ -10,7 +10,7 @@ import {
 
 import styles from './burger-constructor.module.css';
 
-import { addIngredient } from '../../services/actions/burger-constructor';
+import { addIngredient, resetConstructor } from '../../services/actions/burger-constructor';
 import { postOrder, toggleOrderModal, resetOrder } from '../../services/actions/order-details';
 
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
@@ -37,7 +37,9 @@ const BurgerConstructor = () => {
         dispatch(toggleOrderModal());
         dispatch(postOrder(JSON.stringify({
             ingredients: [...ingredients.map(({ _id }) => _id), bun._id]
-        })));
+        }))).then(() => {
+            dispatch(resetConstructor());
+        });
     };
 
     const handleOrderModalHide = () => {
@@ -77,7 +79,7 @@ const BurgerConstructor = () => {
                                 {
                                     ingredients.map((ingredient, index) => (
                                         <BurgerConstructorItem
-                                            key={ingredient.id}
+                                            key={ingredient.key}
                                             ingredient={ingredient}
                                             index={index}
                                         />
