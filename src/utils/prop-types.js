@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
-const categoryPropType = PropTypes.shape({
+export const categoryPropType = PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
 });
 
-const ingredientPropType = PropTypes.shape({
+export const ingredientFieldPropType = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -18,9 +18,8 @@ const ingredientPropType = PropTypes.shape({
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
     __v: PropTypes.number
-});
-
-export {
-    categoryPropType,
-    ingredientPropType
 };
+
+export const ingredientPropType = PropTypes.shape(
+    ingredientFieldPropType
+);

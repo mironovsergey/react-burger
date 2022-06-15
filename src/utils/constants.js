@@ -1,12 +1,7 @@
-const apiUrl = 'https://norma.nomoreparties.space/api/ingredients';
+export const apiUrl = 'https://norma.nomoreparties.space/api';
 
-const categories = [
+export const categories = [
     { name: 'Булки', value: 'bun' },
     { name: 'Соусы', value: 'sauce' },
     { name: 'Начинки', value: 'main' }
 ];
-
-export {
-    apiUrl,
-    categories
-};

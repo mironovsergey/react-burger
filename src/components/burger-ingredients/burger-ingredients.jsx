@@ -1,37 +1,76 @@
-import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useCallback, useMemo, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {
-    categoryPropType,
-    ingredientPropType
-} from '../../utils/prop-types';
-
-import {
-    Tab
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-ingredients.module.css';
 
-import BurgerIngredient from '../burger-ingredient/burger-ingredient';
+import { categories } from '../../utils/constants';
+import { getIngredients } from '../../services/actions/burger-ingredients';
+import { setCurrentCategory } from '../../services/actions/burger-ingredients';
+import { setCurrentIngredient } from '../../services/actions/ingredient-details';
 
-const BurgerIngredients = ({ categories, ingredients, onModalIngredientOpen }) => {
-    const [currentTab, setCurrentTab] = useState(categories[0].value);
+import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 
-    // Ref-объект блока ингредиентов
-    const pane = useRef(null);
+const BurgerIngredients = () => {
+    const dispatch = useDispatch();
+
+    const {
+        ingredients,
+        ingredientsRequest,
+        ingredientsError,
+        currentCategory
+    } = useSelector(({ burgerIngredients }) => burgerIngredients);
+
+    const {
+        bun: constructorBun,
+        ingredients: constructorIngredients
+    } = useSelector(({ burgerConstructor }) => burgerConstructor);
+
+    const {
+        currentIngredient
+    } = useSelector(({ ingredientDetails }) => ingredientDetails);
 
     useEffect(() => {
-        const category = categories.find(({ value }) => value === currentTab);
+        dispatch(getIngredients());
+    }, [dispatch]);
 
-        if (pane.current instanceof HTMLElement) {
-            const title = [...pane.current.getElementsByTagName('h2')]
+    // Ref-объект блока ингредиентов
+    const panelRef = useRef(null);
+
+    // Смена активного таба при клике
+    const handleTabClick = useCallback((value) => {
+        dispatch(setCurrentCategory(value));
+
+        const category = categories.find((item) => item.value === value);
+
+        if (panelRef.current instanceof HTMLElement) {
+            const title = [...panelRef.current.getElementsByTagName('h2')]
                 .find(({ textContent }) => textContent === category.name);
 
             if (title instanceof HTMLElement) {
                 title.scrollIntoView({ block: 'start', behavior: 'smooth' });
             }
         }
-    }, [categories, currentTab]);
+    }, [dispatch]);
+
+    // Смена активного таба при скролле
+    const handleScroll = useCallback((event) => {
+        const scrollTop = event.currentTarget.scrollTop;
+        const titles = [...event.currentTarget.getElementsByTagName('h2')]
+            .map(({ textContent, offsetTop }) => ({
+                name: textContent, diff: Math.abs(offsetTop - scrollTop)
+            }))
+            .sort((a, b) => (a.diff - b.diff));
+
+        const category = categories.find(({ name }) => name === titles[0]?.name);
+
+        if (category && category.value !== currentCategory) {
+            dispatch(setCurrentCategory(category.value));
+        }
+    }, [dispatch, currentCategory]);
 
     // Список табов категорий
     const tabList = categories.map(({ name, value }) => {
@@ -39,13 +78,29 @@ const BurgerIngredients = ({ categories, ingredients, onModalIngredientOpen }) =
             <Tab
                 key={value}
                 value={value}
-                active={currentTab === value}
-                onClick={setCurrentTab}
+                active={currentCategory === value}
+                onClick={handleTabClick}
             >
                 {name}
             </Tab>
         );
     });
+
+    // Количество добавленных в конструктор ингредиентов
+    const ingredientCount = useMemo(() => {
+        const result = {};
+
+        if (constructorBun) {
+            result[constructorBun._id] = 2;
+        }
+
+        constructorIngredients.forEach((ingredient) => {
+            result[ingredient._id] = !result[ingredient._id]
+                ? 1 : result[ingredient._id] + 1;
+        });
+
+        return result;
+    }, [constructorBun, constructorIngredients]);
 
     // Список ингредиентов сгруппированных по категориям
     const ingredientList = categories.map(({ name, value }) => {
@@ -53,11 +108,11 @@ const BurgerIngredients = ({ categories, ingredients, onModalIngredientOpen }) =
             .filter(({ type }) => (
                 type === value
             ))
-            .map((item) => (
-                <BurgerIngredient
-                    key={item._id}
-                    ingredient={item}
-                    onClick={() => onModalIngredientOpen(item)}
+            .map((ingredient) => (
+                <BurgerIngredientsItem
+                    key={ingredient._id}
+                    ingredient={ingredient}
+                    count={Number(ingredientCount[ingredient._id])}
                 />
             ));
 
@@ -81,21 +136,48 @@ const BurgerIngredients = ({ categories, ingredients, onModalIngredientOpen }) =
             <div className={`${styles.tabs} mb-10`}>
                 {tabList}
             </div>
-            <div className={styles.pane} ref={pane}>
-                <div className={styles.pane_outer}>
-                    <div className={`${styles.pane_inner} custom-scroll`}>
-                        {ingredientList}
+            {
+                ingredientsRequest && (
+                    <div className={styles.notice}>
+                        <div className="text text_type_main-large">
+                            Загрузка....
+                        </div>
                     </div>
-                </div>
-            </div>
+                )
+            }
+            {
+                ingredientsError && (
+                    <div className={styles.notice}>
+                        <div className="text text_type_main-large">
+                            Произошла ошибка
+                        </div>
+                    </div>
+                )
+            }
+            {
+                !(ingredientsRequest || ingredientsError) && (
+                    <div className={styles.panel}>
+                        <div className={styles.panel_outer}>
+                            <div ref={panelRef} onScroll={handleScroll}
+                                className={`${styles.panel_inner} custom-scroll`}>
+                                {ingredientList}
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+            {
+                currentIngredient && (
+                    <Modal
+                        title="Детали ингредиента"
+                        onClose={() => dispatch(setCurrentIngredient(null))}
+                    >
+                        <IngredientDetails />
+                    </Modal>
+                )
+            }
         </section>
     );
-};
-
-BurgerIngredients.propTypes = {
-    categories: PropTypes.arrayOf(categoryPropType.isRequired).isRequired,
-    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-    onModalIngredientOpen: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;

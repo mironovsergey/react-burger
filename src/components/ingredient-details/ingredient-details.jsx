@@ -1,24 +1,17 @@
-import { ingredientPropType } from '../../utils/prop-types';
+import { useSelector } from 'react-redux';
 
 import styles from './ingredient-details.module.css';
 
-const IngredientDetails = ({ ingredient }) => {
-    const {
-        name,
-        image_large,
-        calories,
-        proteins,
-        fat,
-        carbohydrates
-    } = ingredient;
+const IngredientDetails = () => {
+    const { currentIngredient } = useSelector(({ ingredientDetails }) => ingredientDetails);
 
     return (
         <div className={`${styles.component} mb-5`}>
             <div className={`${styles.image} mb-4`}>
-                <img src={image_large} alt={name} />
+                <img src={currentIngredient.image_large} alt={currentIngredient.name} />
             </div>
             <div className={`${styles.name} text text_type_main-medium mb-8`}>
-                {name}
+                {currentIngredient.name}
             </div>
             <div className={styles.props}>
                 <div className={styles.props_item}>
@@ -26,7 +19,7 @@ const IngredientDetails = ({ ingredient }) => {
                         Калории,ккал
                     </div>
                     <div className={`${styles.props_value} text text_type_digits-default`}>
-                        {calories}
+                        {currentIngredient.calories}
                     </div>
                 </div>
                 <div className={styles.props_item}>
@@ -34,7 +27,7 @@ const IngredientDetails = ({ ingredient }) => {
                         Белки,г
                     </div>
                     <div className={`${styles.props_value} text text_type_digits-default`}>
-                        {proteins}
+                        {currentIngredient.proteins}
                     </div>
                 </div>
                 <div className={styles.props_item}>
@@ -42,7 +35,7 @@ const IngredientDetails = ({ ingredient }) => {
                         Жиры,г
                     </div>
                     <div className={`${styles.props_value} text text_type_digits-default`}>
-                        {fat}
+                        {currentIngredient.fat}
                     </div>
                 </div>
                 <div className={styles.props_item}>
@@ -50,16 +43,12 @@ const IngredientDetails = ({ ingredient }) => {
                         Углеводы,г
                     </div>
                     <div className={`${styles.props_value} text text_type_digits-default`}>
-                        {carbohydrates}
+                        {currentIngredient.carbohydrates}
                     </div>
                 </div>
             </div>
         </div>
     );
-};
-
-IngredientDetails.propTypes = {
-    ingredient: ingredientPropType.isRequired
 };
 
 export default IngredientDetails;
