@@ -40,12 +40,20 @@
     text-decoration: none;
 }
 
-.nav_item_active .nav_link {
+.nav_link_active {
     color: var(--text-active-color);
+}
+
+.nav_link_active svg {
+    fill: var(--text-active-color);
 }
 
 .logo {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.logo svg {
+    display: block;
 }

@@ -1,4 +1,7 @@
-.component {}
+.component {
+    max-width: 520px;
+    width: 100%;
+}
 
 .image {
     display: flex;

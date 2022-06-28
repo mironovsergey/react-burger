@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,13 +6,9 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 
 import { categories } from '../../utils/constants';
-import { getIngredients } from '../../services/actions/burger-ingredients';
 import { setCurrentCategory } from '../../services/actions/burger-ingredients';
-import { setCurrentIngredient } from '../../services/actions/ingredient-details';
 
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch();
@@ -28,14 +24,6 @@ const BurgerIngredients = () => {
         bun: constructorBun,
         ingredients: constructorIngredients
     } = useSelector(({ burgerConstructor }) => burgerConstructor);
-
-    const {
-        currentIngredient
-    } = useSelector(({ ingredientDetails }) => ingredientDetails);
-
-    useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
 
     // Ref-объект блока ингредиентов
     const panelRef = useRef(null);
@@ -94,9 +82,8 @@ const BurgerIngredients = () => {
             result[constructorBun._id] = 2;
         }
 
-        constructorIngredients.forEach((ingredient) => {
-            result[ingredient._id] = !result[ingredient._id]
-                ? 1 : result[ingredient._id] + 1;
+        constructorIngredients.forEach(({ _id }) => {
+            result[_id] = !result[_id] ? 1 : result[_id] + 1;
         });
 
         return result;
@@ -164,16 +151,6 @@ const BurgerIngredients = () => {
                             </div>
                         </div>
                     </div>
-                )
-            }
-            {
-                currentIngredient && (
-                    <Modal
-                        title="Детали ингредиента"
-                        onClose={() => dispatch(setCurrentIngredient(null))}
-                    >
-                        <IngredientDetails />
-                    </Modal>
                 )
             }
         </section>

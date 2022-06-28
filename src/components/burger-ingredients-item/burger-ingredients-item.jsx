@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 
@@ -11,10 +11,8 @@ import {
 
 import styles from './burger-ingredients-item.module.css';
 
-import { setCurrentIngredient } from '../../services/actions/ingredient-details';
-
 const BurgerIngredientsItem = ({ ingredient, count }) => {
-    const dispatch = useDispatch();
+    const location = useLocation();
 
     const [{ opacity }, dragRef] = useDrag({
         type: 'ingredientsItem',
@@ -25,8 +23,7 @@ const BurgerIngredientsItem = ({ ingredient, count }) => {
     });
 
     return (
-        <div ref={dragRef} className={styles.component} style={{ opacity }}
-            onClick={() => dispatch(setCurrentIngredient(ingredient))}>
+        <div ref={dragRef} className={styles.component} style={{ opacity }}>
             <div className={`${styles.image} ml-4 mr-4 mb-1`}>
                 <div className={styles.image_wrap}>
                     <img src={ingredient.image} alt={ingredient.name} />
@@ -39,7 +36,15 @@ const BurgerIngredientsItem = ({ ingredient, count }) => {
                 <CurrencyIcon type="primary" />
             </div>
             <div className={`${styles.name} text_type_main-default`}>
-                {ingredient.name}
+                <Link
+                    to={{
+                        pathname: `/ingredients/${ingredient._id}`,
+                        state: { background: location },
+                    }}
+                    className={styles.link}
+                >
+                    {ingredient.name}
+                </Link>
             </div>
             {
                 !!count && (

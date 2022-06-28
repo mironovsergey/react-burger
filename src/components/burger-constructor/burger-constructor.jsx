@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 
 import {
@@ -19,6 +20,7 @@ import Modal from '../modal/modal';
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [{ isHover }, dropRef] = useDrop({
         accept: 'ingredientsItem',
@@ -30,16 +32,21 @@ const BurgerConstructor = () => {
         },
     });
 
+    const { user } = useSelector(({ user }) => user);
     const { bun, ingredients } = useSelector(({ burgerConstructor }) => burgerConstructor);
     const { isOrderModalShown } = useSelector(({ orderDetails }) => orderDetails);
 
     const handleOrderModalShow = () => {
-        dispatch(toggleOrderModal());
-        dispatch(postOrder(JSON.stringify({
-            ingredients: [...ingredients.map(({ _id }) => _id), bun._id]
-        }))).then(() => {
-            dispatch(resetConstructor());
-        });
+        if (user) {
+            dispatch(toggleOrderModal());
+            dispatch(postOrder(JSON.stringify({
+                ingredients: [...ingredients.map(({ _id }) => _id), bun._id]
+            }))).then(() => {
+                dispatch(resetConstructor());
+            });
+        } else {
+            history.push('/login');
+        }
     };
 
     const handleOrderModalHide = () => {
@@ -48,10 +55,9 @@ const BurgerConstructor = () => {
     };
 
     // Итоговая цена
-    const total = useMemo(() => {
-        return ingredients.reduce((acc, curr) => acc + curr.price, 0)
-            + (bun ? bun.price * 2 : 0);
-    }, [bun, ingredients]);
+    const total = useMemo(() => (
+        ingredients.reduce((acc, { price }) => acc + price, 0) + (bun ? bun.price * 2 : 0)
+    ), [bun, ingredients]);
 
     return (
         <section className={`${styles.component} pt-25 pb-25`}>

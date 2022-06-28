@@ -1,0 +1,27 @@
+.component {}
+
+.nav {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav_item {}
+
+.nav_link {
+    color: var(--text-inactive-color);
+    text-decoration: none;
+    background-color: transparent;
+    background-image: none;
+    border-width: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 64px;
+    cursor: pointer;
+}
+
+.nav_link_active {
+    color: var(--text-active-color);
+}

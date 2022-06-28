@@ -44,6 +44,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
         }
         case RESET_ORDER: {
             return {
+                ...state,
                 order: null,
                 orderRequest: false,
                 orderError: false,
