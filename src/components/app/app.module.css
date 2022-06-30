@@ -9,11 +9,3 @@
 .main {
     flex: 1 0 auto;
 }
-
-.container {
-    composes: container from global;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: calc(var(--offset-base-size) * 10);
-    height: 100%;
-}

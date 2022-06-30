@@ -1,9 +1,23 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import styles from './ingredient-details.module.css';
 
 const IngredientDetails = () => {
-    const { currentIngredient } = useSelector(({ ingredientDetails }) => ingredientDetails);
+    const { id } = useParams();
+
+    const {
+        ingredients
+    } = useSelector(({ burgerIngredients }) => burgerIngredients);
+
+    const currentIngredient = useMemo(() => (
+        ingredients.find((item) => item._id === id)
+    ), [id, ingredients]);
+
+    if (!currentIngredient) {
+        return null;
+    }
 
     return (
         <div className={`${styles.component} mb-5`}>

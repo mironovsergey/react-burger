@@ -1,4 +1,4 @@
-import { fetchOrder } from '../api';
+import { postOrderRequest } from '../api';
 
 export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
@@ -14,7 +14,7 @@ export const postOrder = (payload) => {
             type: POST_ORDER_REQUEST
         });
 
-        return fetchOrder(payload)
+        return postOrderRequest(payload)
             .then((res) => {
                 dispatch({
                     type: POST_ORDER_SUCCESS,
@@ -25,6 +25,7 @@ export const postOrder = (payload) => {
                 dispatch({
                     type: POST_ORDER_ERROR
                 });
+
                 throw new Error(err);
             });
     };

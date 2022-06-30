@@ -1,0 +1,12 @@
+.component {
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+}
+
+.input div {
+    text-align: right;
+    width: 100%;
+}
+
+.button {}

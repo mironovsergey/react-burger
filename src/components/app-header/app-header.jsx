@@ -1,3 +1,6 @@
+import { useSelector, } from 'react-redux';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+
 import {
     Logo,
     BurgerIcon,
@@ -8,39 +11,70 @@ import {
 import styles from './app-header.module.css';
 
 const AppHeader = () => {
+    const { pathname } = useLocation();
+    const { user, userRequest } = useSelector(({ user }) => user);
+
     return (
         <header className={styles.component}>
             <div className={styles.container}>
                 <ul className={`${styles.nav} ${styles.nav_left}`}>
-                    <li className={`${styles.nav_item} ${styles.nav_item_active}`}>
-                        <a href="/" className={styles.nav_link}>
-                            <BurgerIcon type="primary" />
+                    <li className={styles.nav_item}>
+                        <NavLink
+                            to="/"
+                            className={styles.nav_link}
+                            activeClassName={styles.nav_link_active}
+                            exact
+                        >
+                            <BurgerIcon type="secondary" />
                             <span className="text text_type_main-default">
                                 Конструктор
                             </span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className={styles.nav_item}>
-                        <a href="/feed" className={styles.nav_link}>
+                        <NavLink
+                            to="/feed"
+                            className={styles.nav_link}
+                            activeClassName={styles.nav_link_active}
+                        >
                             <ListIcon type="secondary" />
                             <span className="text text_type_main-default">
                                 Лента заказов
                             </span>
-                        </a>
+                        </NavLink>
                     </li>
                 </ul>
                 <div className={styles.logo}>
-                    <Logo />
+                    {
+                        pathname === '/' ?
+                            (
+                                <Logo />
+                            )
+                            :
+                            (
+                                <Link to="/">
+                                    <Logo />
+                                </Link>
+                            )
+                    }
                 </div>
                 <ul className={`${styles.nav} ${styles.nav_right}`}>
-                    <li className={styles.nav_item}>
-                        <a href="/user" className={styles.nav_link}>
-                            <ProfileIcon type="secondary" />
-                            <span className="text text_type_main-default">
-                                Личный кабинет
-                            </span>
-                        </a>
-                    </li>
+                    {
+                        !userRequest && (
+                            <li className={styles.nav_item}>
+                                <NavLink
+                                    to="/profile"
+                                    className={styles.nav_link}
+                                    activeClassName={styles.nav_link_active}
+                                >
+                                    <ProfileIcon type="secondary" />
+                                    <span className="text text_type_main-default">
+                                        {user?.name || 'Личный кабинет'}
+                                    </span>
+                                </NavLink>
+                            </li>
+                        )
+                    }
                 </ul>
             </div>
         </header>

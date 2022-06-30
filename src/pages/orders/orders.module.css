@@ -1,0 +1,8 @@
+.container {
+    composes: container from global;
+    display: grid;
+    grid-template-columns: 320px auto;
+    column-gap: calc(var(--offset-base-size) * 15);
+    height: 100%;
+    padding-top: 120px;
+}

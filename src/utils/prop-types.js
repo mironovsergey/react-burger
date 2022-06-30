@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { isValidElementType } from 'react-is';
 
 export const categoryPropType = PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -23,3 +24,29 @@ export const ingredientFieldPropType = {
 export const ingredientPropType = PropTypes.shape(
     ingredientFieldPropType
 );
+
+export const routePropType = {
+    exact: PropTypes.bool,
+    strict: PropTypes.bool,
+    location: PropTypes.object,
+    sensitive: PropTypes.bool,
+    render: PropTypes.func,
+    component: (props, propName, componentName) => {
+        if (props[propName] && !isValidElementType(props[propName])) {
+            return new Error(
+                'Проп `' + propName + '` компонента' +
+                ' `' + componentName + '` имеет неправильное значение'
+            );
+        }
+    },
+    children: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.node
+    ]),
+    path: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(
+            PropTypes.string
+        )
+    ])
+};
