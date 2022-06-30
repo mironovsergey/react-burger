@@ -3,7 +3,9 @@ import styles from './not-found.module.css';
 const NotFound = () => {
     return (
         <div className={styles.container}>
-            404
+            <div className="text text_type_digits-large">
+                404
+            </div>
         </div>
     );
 };
