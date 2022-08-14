@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 
-import styles from './register.module.css';
+import styles from './login.module.css';
 
-import RegisterForm from '../../components/register-form/register-form';
+import LoginForm from '../../components/login-form/login-form';
 
-const Register = () => {
-    const { state } = useLocation();
-    const { user, userRequest } = useSelector(({ user }) => user);
+import { TLocationState } from '../../utils/types';
+
+const Login = () => {
+    const { state } = useLocation<TLocationState>();
+    const { user, userRequest } = useSelector(({ user }: any) => user);
 
     if (userRequest) {
         return null;
@@ -22,11 +24,11 @@ const Register = () => {
     return (
         <div className={styles.container}>
             <h1 className="text text_type_main-medium mb-6">
-                Регистрация
+                Вход
             </h1>
-            <RegisterForm />
+            <LoginForm />
         </div>
     );
 };
 
-export default Register;
+export default Login;

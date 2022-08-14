@@ -1,8 +1,7 @@
+import type { FC } from 'react';
+
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
-
-import { ingredientPropType } from '../../utils/prop-types';
 
 import {
     Counter,
@@ -11,7 +10,14 @@ import {
 
 import styles from './burger-ingredients-item.module.css';
 
-const BurgerIngredientsItem = ({ ingredient, count }) => {
+import { TIngredient } from '../../utils/types';
+
+type TBurgerIngredientsItem = {
+    ingredient: TIngredient,
+    count: number
+};
+
+const BurgerIngredientsItem: FC<TBurgerIngredientsItem> = ({ ingredient, count }) => {
     const location = useLocation();
 
     const [{ opacity }, dragRef] = useDrag({
@@ -53,11 +59,6 @@ const BurgerIngredientsItem = ({ ingredient, count }) => {
             }
         </div>
     );
-};
-
-BurgerIngredientsItem.propTypes = {
-    ingredient: ingredientPropType.isRequired,
-    count: PropTypes.number
 };
 
 export default BurgerIngredientsItem;

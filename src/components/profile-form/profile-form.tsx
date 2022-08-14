@@ -1,3 +1,5 @@
+import type { FormEvent, ChangeEvent, MouseEvent } from 'react';
+
 import { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,15 +12,21 @@ import styles from './profile-form.module.css';
 
 import { patchUser } from '../../services/actions/profile-form';
 
+type TProfileForm = {
+    name: string;
+    email: string;
+    password: string;
+};
+
 const ProfileForm = () => {
     const dispatch = useDispatch();
 
     const {
         profileRequest,
         profileError
-    } = useSelector(({ profileForm }) => profileForm);
+    } = useSelector(({ profileForm }: any) => profileForm);
 
-    const { user } = useSelector(({ user }) => user);
+    const { user } = useSelector(({ user }: any) => user);
 
     const initialState = useMemo(() => ({
         name: user?.name || '',
@@ -26,7 +34,7 @@ const ProfileForm = () => {
         password: ''
     }), [user]);
 
-    const [state, setState] = useState({ ...initialState });
+    const [state, setState] = useState<TProfileForm>({ ...initialState });
     const [hasChanged, setChanged] = useState(false);
 
     useEffect(() => {
@@ -37,7 +45,7 @@ const ProfileForm = () => {
         );
     }, [initialState, state]);
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { target } = event;
 
         setState({
@@ -46,12 +54,13 @@ const ProfileForm = () => {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        // @ts-ignore
         dispatch(patchUser(JSON.stringify(state)));
     };
 
-    const handleReset = (event) => {
+    const handleReset = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setState({
             ...initialState
@@ -113,6 +122,7 @@ const ProfileForm = () => {
                         >
                             <span>Отмена</span>
                         </button>
+                        {/* @ts-ignore */}
                         <Button type="primary" size="medium" disabled={profileRequest}>
                             {!profileRequest ? 'Сохранить' : 'Сохранение....'}
                         </Button>

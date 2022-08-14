@@ -18,6 +18,8 @@ import BurgerConstructorItem from '../burger-constructor-item/burger-constructor
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
 
+import { TConstructorIngredient } from '../../utils/types';
+
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -32,13 +34,19 @@ const BurgerConstructor = () => {
         },
     });
 
-    const { user } = useSelector(({ user }) => user);
-    const { bun, ingredients } = useSelector(({ burgerConstructor }) => burgerConstructor);
-    const { isOrderModalShown } = useSelector(({ orderDetails }) => orderDetails);
+    const { user } = useSelector(({ user }: any) => user);
+
+    const { bun, ingredients }: {
+        bun: TConstructorIngredient,
+        ingredients: TConstructorIngredient[]
+    } = useSelector(({ burgerConstructor }: any) => burgerConstructor);
+
+    const { isOrderModalShown } = useSelector(({ orderDetails }: any) => orderDetails);
 
     const handleOrderModalShow = () => {
         if (user) {
             dispatch(toggleOrderModal());
+            // @ts-ignore
             dispatch(postOrder(JSON.stringify({
                 ingredients: [...ingredients.map(({ _id }) => _id), bun._id]
             }))).then(() => {
@@ -123,6 +131,7 @@ const BurgerConstructor = () => {
                     </span>
                     <CurrencyIcon type="primary" />
                 </div>
+                {/* @ts-ignore */}
                 <Button type="primary" size="large"
                     disabled={!(bun && ingredients.length)}
                     onClick={handleOrderModalShow}>

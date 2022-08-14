@@ -1,25 +1,37 @@
 import { apiUrl } from '../utils/constants';
 import { cookies } from './cookie';
 
-const checkResponse = (response) => {
+import {
+    TIngredientsResponse,
+    TOrderResponse,
+    TRegisterResponse,
+    TLoginResponse,
+    TLogoutResponse,
+    TUserResponse,
+    TTokenResponse,
+    TForgotPasswordResponse,
+    TResetPasswordResponse
+} from '../utils/types';
+
+const checkResponse = <T>(response: Response): Promise<T> => {
     return response.ok ? response.json()
         : response.json().then((error) => Promise.reject(error));
 };
 
-const checkSuccess = (data) => {
-    return data?.success ? data : Promise.reject(data);
+const checkSuccess = <T extends { success: boolean }>(data: T): T | Promise<T> => {
+    return data.success ? data : Promise.reject(data);
 };
 
 // Получение ингредиента
-export const getIngredientsRequest = async () => {
+export const getIngredientsRequest = async (): Promise<TIngredientsResponse> => {
     const response = await fetch(`${apiUrl}/ingredients`);
-    const data = await checkResponse(response);
+    const data = await checkResponse<TIngredientsResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TIngredientsResponse>(data);
 };
 
 // Оформление заказа
-export const postOrderRequest = async (body) => {
+export const postOrderRequest = async (body: string): Promise<TOrderResponse> => {
     const response = await fetch(`${apiUrl}/orders`, {
         method: 'POST',
         headers: {
@@ -28,13 +40,13 @@ export const postOrderRequest = async (body) => {
         body
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TOrderResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TOrderResponse>(data);
 };
 
 // Регистрация пользователя
-export const postRegisterRequest = async (body) => {
+export const postRegisterRequest = async (body: string): Promise<TRegisterResponse> => {
     const response = await fetch(`${apiUrl}/auth/register`, {
         method: 'POST',
         headers: {
@@ -43,13 +55,13 @@ export const postRegisterRequest = async (body) => {
         body
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TRegisterResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TRegisterResponse>(data);
 };
 
 // Авторизация пользователя
-export const postLoginRequest = async (body) => {
+export const postLoginRequest = async (body: string): Promise<TLoginResponse> => {
     const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: {
@@ -58,13 +70,13 @@ export const postLoginRequest = async (body) => {
         body
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TLoginResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TLoginResponse>(data);
 };
 
 // Выход из системы
-export const postLogoutRequest = async () => {
+export const postLogoutRequest = async (): Promise<TLogoutResponse> => {
     const response = await fetch(`${apiUrl}/auth/logout`, {
         method: 'POST',
         headers: {
@@ -75,13 +87,13 @@ export const postLogoutRequest = async () => {
         })
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TLogoutResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TLogoutResponse>(data);
 };
 
 // Получение информации о пользователе
-export const getUserRequest = async () => {
+export const getUserRequest = async (): Promise<TUserResponse> => {
     const response = await fetch(`${apiUrl}/auth/user`, {
         method: 'GET',
         headers: {
@@ -90,13 +102,13 @@ export const getUserRequest = async () => {
         }
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TUserResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TUserResponse>(data);
 };
 
 // Обновление информации о пользователе
-export const patchUserRequest = async (body) => {
+export const patchUserRequest = async (body: string): Promise<TUserResponse> => {
     const response = await fetch(`${apiUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
@@ -106,13 +118,13 @@ export const patchUserRequest = async (body) => {
         body
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TUserResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TUserResponse>(data);
 };
 
 // Обновление токена
-export const postTokenRequest = async () => {
+export const postTokenRequest = async (): Promise<TTokenResponse> => {
     const response = await fetch(`${apiUrl}/auth/token`, {
         method: 'POST',
         headers: {
@@ -123,13 +135,13 @@ export const postTokenRequest = async () => {
         })
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TTokenResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TTokenResponse>(data);
 };
 
 // Восстановление пароля
-export const postForgotPasswordRequest = async (body) => {
+export const postForgotPasswordRequest = async (body: string): Promise<TForgotPasswordResponse> => {
     const response = await fetch(`${apiUrl}/password-reset`, {
         method: 'POST',
         headers: {
@@ -138,13 +150,13 @@ export const postForgotPasswordRequest = async (body) => {
         body
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TForgotPasswordResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TForgotPasswordResponse>(data);
 };
 
 // Сброс пароля
-export const postResetPasswordRequest = async (body) => {
+export const postResetPasswordRequest = async (body: string): Promise<TResetPasswordResponse> => {
     const response = await fetch(`${apiUrl}/password-reset/reset`, {
         method: 'POST',
         headers: {
@@ -153,7 +165,7 @@ export const postResetPasswordRequest = async (body) => {
         body
     });
 
-    const data = await checkResponse(response);
+    const data = await checkResponse<TResetPasswordResponse>(response);
 
-    return checkSuccess(data);
+    return checkSuccess<TResetPasswordResponse>(data);
 };

@@ -12,7 +12,7 @@ import styles from './app-header.module.css';
 
 const AppHeader = () => {
     const { pathname } = useLocation();
-    const { user, userRequest } = useSelector(({ user }) => user);
+    const { user, userRequest } = useSelector(({ user }: any) => user);
 
     return (
         <header className={styles.component}>

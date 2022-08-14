@@ -10,7 +10,7 @@ import store from './services/store';
 import App from './components/app/app';
 
 const root = ReactDOM.createRoot(
-    document.getElementById('app-root')
+    document.getElementById('app-root') as HTMLDivElement
 );
 
 root.render(

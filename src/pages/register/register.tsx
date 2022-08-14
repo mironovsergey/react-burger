@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 
-import styles from './reset-password.module.css';
+import styles from './register.module.css';
 
-import ResetPasswordForm from '../../components/reset-password-form/reset-password-form';
+import RegisterForm from '../../components/register-form/register-form';
 
-const ResetPassword = () => {
-    const { state } = useLocation();
-    const { user, userRequest } = useSelector(({ user }) => user);
+import { TLocationState } from '../../utils/types';
+
+const Register = () => {
+    const { state } = useLocation<TLocationState>();
+    const { user, userRequest } = useSelector(({ user }: any) => user);
 
     if (userRequest) {
         return null;
@@ -22,11 +24,11 @@ const ResetPassword = () => {
     return (
         <div className={styles.container}>
             <h1 className="text text_type_main-medium mb-6">
-                Восстановление пароля
+                Регистрация
             </h1>
-            <ResetPasswordForm />
+            <RegisterForm />
         </div>
     );
 };
 
-export default ResetPassword;
+export default Register;

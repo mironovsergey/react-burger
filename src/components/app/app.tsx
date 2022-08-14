@@ -25,14 +25,22 @@ import {
     NotFound
 } from '../../pages';
 
+import { Location } from 'history';
+
+type TLocationState = {
+    background: Location;
+};
+
 const App = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation();
+    const location = useLocation<TLocationState>();
     const background = location.state && location.state.background;
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getIngredients());
+        // @ts-ignore
         dispatch(getUser());
     }, [dispatch]);
 
@@ -73,16 +81,18 @@ const App = () => {
                     </Route>
                 </Switch>
 
-                {background && (
-                    <Route path="/ingredients/:id">
-                        <Modal
-                            title="Детали ингредиента"
-                            onClose={() => history.goBack()}
-                        >
-                            <IngredientDetails />
-                        </Modal>
-                    </Route>
-                )}
+                {
+                    background && (
+                        <Route path="/ingredients/:id">
+                            <Modal
+                                title="Детали ингредиента"
+                                onClose={() => history.goBack()}
+                            >
+                                <IngredientDetails />
+                            </Modal>
+                        </Route>
+                    )
+                }
             </main>
         </div>
     );

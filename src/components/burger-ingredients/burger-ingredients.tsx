@@ -1,7 +1,9 @@
+import type { FC, ReactNode, UIEvent } from 'react';
+
 import { useCallback, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab as TabUI } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-ingredients.module.css';
 
@@ -9,6 +11,19 @@ import { categories } from '../../utils/constants';
 import { setCurrentCategory } from '../../services/actions/burger-ingredients';
 
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
+
+import { TIngredient, TConstructorIngredient } from '../../utils/types';
+
+type TIngredientCount = {
+    [key: string]: number;
+};
+
+const Tab: FC<{
+    active: boolean;
+    value: string;
+    onClick: (value: string) => void;
+    children: ReactNode;
+}> = TabUI;
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch();
@@ -18,24 +33,32 @@ const BurgerIngredients = () => {
         ingredientsRequest,
         ingredientsError,
         currentCategory
-    } = useSelector(({ burgerIngredients }) => burgerIngredients);
+    }: {
+        ingredients: TIngredient[],
+        ingredientsRequest: boolean,
+        ingredientsError: boolean,
+        currentCategory: string
+    } = useSelector(({ burgerIngredients }: any) => burgerIngredients);
 
     const {
         bun: constructorBun,
         ingredients: constructorIngredients
-    } = useSelector(({ burgerConstructor }) => burgerConstructor);
+    }: {
+        bun: TConstructorIngredient,
+        ingredients: TConstructorIngredient[]
+    } = useSelector(({ burgerConstructor }: any) => burgerConstructor);
 
     // Ref-объект блока ингредиентов
-    const panelRef = useRef(null);
+    const panelRef = useRef<HTMLDivElement>(null);
 
     // Смена активного таба при клике
-    const handleTabClick = useCallback((value) => {
+    const handleTabClick = useCallback((value: string) => {
         dispatch(setCurrentCategory(value));
 
         const category = categories.find((item) => item.value === value);
 
-        if (panelRef.current instanceof HTMLElement) {
-            const title = [...panelRef.current.getElementsByTagName('h2')]
+        if (panelRef.current instanceof HTMLElement && category) {
+            const title = Array.from(panelRef.current.getElementsByTagName('h2'))
                 .find(({ textContent }) => textContent === category.name);
 
             if (title instanceof HTMLElement) {
@@ -45,9 +68,9 @@ const BurgerIngredients = () => {
     }, [dispatch]);
 
     // Смена активного таба при скролле
-    const handleScroll = useCallback((event) => {
+    const handleScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
         const scrollTop = event.currentTarget.scrollTop;
-        const titles = [...event.currentTarget.getElementsByTagName('h2')]
+        const titles = Array.from(event.currentTarget.getElementsByTagName('h2'))
             .map(({ textContent, offsetTop }) => ({
                 name: textContent, diff: Math.abs(offsetTop - scrollTop)
             }))
@@ -76,7 +99,7 @@ const BurgerIngredients = () => {
 
     // Количество добавленных в конструктор ингредиентов
     const ingredientCount = useMemo(() => {
-        const result = {};
+        const result: TIngredientCount = {};
 
         if (constructorBun) {
             result[constructorBun._id] = 2;

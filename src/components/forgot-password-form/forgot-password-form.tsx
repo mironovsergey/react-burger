@@ -1,3 +1,5 @@
+import type { FormEvent, ChangeEvent } from 'react';
+
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -11,30 +13,35 @@ import styles from './forgot-password-form.module.css';
 
 import { postForgotPassword } from '../../services/actions/forgot-password-form';
 
+type TForgotPasswordForm = {
+    email: string;
+};
+
 const ForgotPasswordForm = () => {
     const {
         forgotPasswordRequest,
         forgotPasswordSuccess,
         forgotPasswordError
-    } = useSelector(({ forgotPasswordForm }) => forgotPasswordForm);
+    } = useSelector(({ forgotPasswordForm }: any) => forgotPasswordForm);
 
     const dispatch = useDispatch();
 
-    const [state, setState] = useState({
+    const [state, setState] = useState<TForgotPasswordForm>({
         email: ''
     });
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { target } = event;
 
         setState({
             ...state,
-            [target.name]: target.value,
+            [target.name]: target.value
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        // @ts-ignore
         dispatch(postForgotPassword(JSON.stringify(state)));
     };
 
@@ -70,6 +77,7 @@ const ForgotPasswordForm = () => {
             </div>
 
             <div className={`${styles.button}`}>
+                {/* @ts-ignore */}
                 <Button type="primary" size="medium" disabled={forgotPasswordRequest}>
                     {!forgotPasswordRequest ? 'Восстановить' : 'Восстановление....'}
                 </Button>

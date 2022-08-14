@@ -1,3 +1,5 @@
+import type { FormEvent, ChangeEvent } from 'react';
+
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -12,24 +14,29 @@ import styles from './reset-password-form.module.css';
 
 import { postResetPassword } from '../../services/actions/reset-password-form';
 
+type TResetPasswordForm = {
+    password: string;
+    token: string;
+};
+
 const ResetPasswordForm = () => {
     const {
         forgotPasswordSuccess
-    } = useSelector(({ forgotPasswordForm }) => forgotPasswordForm);
+    } = useSelector(({ forgotPasswordForm }: any) => forgotPasswordForm);
 
     const {
         resetPasswordRequest,
         resetPasswordError
-    } = useSelector(({ resetPasswordForm }) => resetPasswordForm);
+    } = useSelector(({ resetPasswordForm }: any) => resetPasswordForm);
 
     const dispatch = useDispatch();
 
-    const [state, setState] = useState({
+    const [state, setState] = useState<TResetPasswordForm>({
         password: '',
         token: ''
     });
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { target } = event;
 
         setState({
@@ -38,8 +45,9 @@ const ResetPasswordForm = () => {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        // @ts-ignore
         dispatch(postResetPassword(JSON.stringify(state)));
     };
 
@@ -85,6 +93,7 @@ const ResetPasswordForm = () => {
             </div>
 
             <div className={`${styles.button}`}>
+                {/* @ts-ignore */}
                 <Button type="primary" size="medium" disabled={resetPasswordRequest}>
                     {!resetPasswordRequest ? 'Сохранить' : 'Сохранение....'}
                 </Button>
