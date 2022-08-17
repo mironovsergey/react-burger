@@ -1,3 +1,5 @@
+import type { FormEvent, ChangeEvent } from 'react';
+
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -8,24 +10,31 @@ import {
     Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './login-form.module.css';
+import styles from './register-form.module.css';
 
-import { postLogin } from '../../services/actions/login-form';
+import { postRegister } from '../../services/actions/register-form';
 
-const LoginForm = () => {
+type TRegisterForm = {
+    name: string;
+    email: string;
+    password: string;
+};
+
+const RegisterForm = () => {
     const {
-        loginRequest,
-        loginError
-    } = useSelector(({ loginForm }) => loginForm);
+        registerRequest,
+        registerError
+    } = useSelector(({ registerForm }: any) => registerForm);
 
     const dispatch = useDispatch();
 
-    const [state, setState] = useState({
+    const [state, setState] = useState<TRegisterForm>({
+        name: '',
         email: '',
         password: ''
     });
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { target } = event;
 
         setState({
@@ -34,9 +43,10 @@ const LoginForm = () => {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(postLogin(JSON.stringify(state)));
+        // @ts-ignore
+        dispatch(postRegister(JSON.stringify(state)));
     };
 
     return (
@@ -46,6 +56,18 @@ const LoginForm = () => {
             autoComplete="off"
             noValidate
         >
+            <div className={`${styles.input} mb-6`}>
+                <Input
+                    type={'text'}
+                    name={'name'}
+                    placeholder={'Имя'}
+                    value={state.name}
+                    onChange={handleChange}
+                    error={false}
+                    size={'default'}
+                />
+            </div>
+
             <div className={`${styles.input} mb-6`}>
                 <Input
                     type={'email'}
@@ -68,34 +90,28 @@ const LoginForm = () => {
             </div>
 
             <div className={`${styles.button}`}>
-                <Button type="primary" size="medium" disabled={loginRequest}>
-                    {!loginRequest ? 'Войти' : 'Вход....'}
+                {/* @ts-ignore */}
+                <Button type="primary" size="medium" disabled={registerRequest}>
+                    {!registerRequest ? 'Зарегистрироваться' : 'Регистрация....'}
                 </Button>
             </div>
 
             {
-                loginError && (
+                registerError && (
                     <div className="text text_type_main-default text_color_error mt-6">
-                        {loginError}
+                        {registerError}
                     </div>
                 )
             }
 
             <div className="text text_type_main-default text_color_inactive mt-20">
-                {'Вы — новый пользователь? '}
-                <Link to="/register" className="text text_color_accent">
-                    Зарегистрироваться
-                </Link>
-            </div>
-
-            <div className="text text_type_main-default text_color_inactive mt-4">
-                {'Забыли пароль? '}
-                <Link to="/forgot-password" className="text text_color_accent">
-                    Восстановить пароль
+                {'Уже зарегистрированы? '}
+                <Link to="/login" className="text text_color_accent">
+                    Войти
                 </Link>
             </div>
         </form>
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

@@ -9,7 +9,7 @@ const OrderDetails = () => {
         order,
         orderRequest,
         orderError
-    } = useSelector(({ orderDetails }) => orderDetails);
+    } = useSelector(({ orderDetails }: any) => orderDetails);
 
     return (
         <div className={`${styles.component} mt-4 mb-20`}>

@@ -4,15 +4,21 @@ import { useParams } from 'react-router-dom';
 
 import styles from './ingredient-details.module.css';
 
+import { TIngredient } from '../../utils/types';
+
+type TParams = {
+    id: string;
+};
+
 const IngredientDetails = () => {
-    const { id } = useParams();
+    const { id } = useParams<TParams>();
 
     const {
         ingredients
-    } = useSelector(({ burgerIngredients }) => burgerIngredients);
+    } = useSelector(({ burgerIngredients }: any) => burgerIngredients);
 
     const currentIngredient = useMemo(() => (
-        ingredients.find((item) => item._id === id)
+        ingredients.find((item: TIngredient) => item._id === id)
     ), [id, ingredients]);
 
     if (!currentIngredient) {

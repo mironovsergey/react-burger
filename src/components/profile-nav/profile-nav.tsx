@@ -1,3 +1,5 @@
+import type { MouseEvent } from 'react';
+
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -8,8 +10,9 @@ import { postLogout } from '../../services/actions/user';
 const ProfileNav = () => {
     const dispatch = useDispatch();
 
-    const handleLogout = (event) => {
+    const handleLogout = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        // @ts-ignore
         dispatch(postLogout());
     };
 
