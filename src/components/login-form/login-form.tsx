@@ -1,14 +1,13 @@
-import type { FormEvent, ChangeEvent } from 'react';
+import type { FC, FormEvent, ChangeEvent } from 'react';
 
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import {
-    Input,
-    PasswordInput,
-    Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from '../../services/hooks';
+
+import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import Button from '../ui/button';
 
 import styles from './login-form.module.css';
 
@@ -19,11 +18,11 @@ type TLoginForm = {
     password: string;
 };
 
-const LoginForm = () => {
+const LoginForm: FC = () => {
     const {
         loginRequest,
         loginError
-    } = useSelector(({ loginForm }: any) => loginForm);
+    } = useSelector(({ loginForm }) => loginForm);
 
     const dispatch = useDispatch();
 
@@ -43,7 +42,6 @@ const LoginForm = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(postLogin(JSON.stringify(state)));
     };
 
@@ -76,7 +74,6 @@ const LoginForm = () => {
             </div>
 
             <div className={`${styles.button}`}>
-                {/* @ts-ignore */}
                 <Button type="primary" size="medium" disabled={loginRequest}>
                     {!loginRequest ? 'Войти' : 'Вход....'}
                 </Button>

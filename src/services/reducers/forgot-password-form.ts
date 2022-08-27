@@ -4,13 +4,26 @@ import {
     POST_FORGOT_PASSWORD_ERROR
 } from '../actions/forgot-password-form';
 
-const initialState = {
+import type {
+    TForgotPasswordActions
+} from '../actions/forgot-password-form';
+
+type TForgotPasswordFormState = {
+    forgotPasswordRequest: boolean;
+    forgotPasswordSuccess: boolean;
+    forgotPasswordError: null | string;
+};
+
+const initialState: TForgotPasswordFormState = {
     forgotPasswordRequest: false,
     forgotPasswordSuccess: false,
     forgotPasswordError: null
 };
 
-export const forgotPasswordFormReducer = (state = initialState, action) => {
+export const forgotPasswordFormReducer = (
+    state = initialState,
+    action: TForgotPasswordActions
+): TForgotPasswordFormState => {
     switch (action.type) {
         case POST_FORGOT_PASSWORD_REQUEST: {
             return {

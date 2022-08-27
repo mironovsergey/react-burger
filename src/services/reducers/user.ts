@@ -11,7 +11,25 @@ import {
     POST_LOGOUT_ERROR
 } from '../actions/user';
 
-const initialState = {
+import type {
+    TUserActions
+} from '../actions/user';
+
+import type {
+    TUser
+} from '../../utils/types';
+
+type TUserState = {
+    user: null | TUser;
+    userRequest: boolean;
+    userError: boolean;
+    tokenRequest: boolean;
+    tokenError: boolean;
+    logoutRequest: boolean;
+    logoutError: boolean;
+};
+
+const initialState: TUserState = {
     user: null,
     userRequest: false,
     userError: false,
@@ -21,7 +39,10 @@ const initialState = {
     logoutError: false
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (
+    state = initialState,
+    action: TUserActions
+): TUserState => {
     switch (action.type) {
         case SET_USER: {
             return {

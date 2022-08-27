@@ -1,15 +1,17 @@
-import { useSelector } from 'react-redux';
+import type { FC } from 'react';
+
+import { useSelector } from '../../services/hooks';
 
 import styles from './order-details.module.css';
 
 import image from '../../images/done.png';
 
-const OrderDetails = () => {
+const OrderDetails: FC = () => {
     const {
         order,
         orderRequest,
         orderError
-    } = useSelector(({ orderDetails }: any) => orderDetails);
+    } = useSelector(({ orderDetails }) => orderDetails);
 
     return (
         <div className={`${styles.component} mt-4 mb-20`}>

@@ -1,6 +1,9 @@
+import type { FC } from 'react';
+
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+
+import { useDispatch } from '../../services/hooks';
 
 import styles from './app.module.css';
 
@@ -31,16 +34,14 @@ type TLocationState = {
     background: Location;
 };
 
-const App = () => {
+const App: FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation<TLocationState>();
     const background = location.state && location.state.background;
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getIngredients());
-        // @ts-ignore
         dispatch(getUser());
     }, [dispatch]);
 

@@ -2,19 +2,17 @@ import type { FC } from 'react';
 import type { Identifier, XYCoord } from 'dnd-core';
 
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 
-import {
-    ConstructorElement,
-    DragIcon
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from '../../services/hooks';
+
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor-item.module.css';
 
 import { removeIngredient, moveIngredient } from '../../services/actions/burger-constructor';
 
-import { TConstructorIngredient } from '../../utils/types';
+import type { TConstructorIngredient } from '../../utils/types';
 
 type TBurgerConstructorItem = {
     ingredient: TConstructorIngredient,
@@ -37,7 +35,7 @@ const BurgerConstructorItem: FC<TBurgerConstructorItem> = ({ ingredient, index }
         item: () => {
             return { index }
         },
-        collect: (monitor: any) => ({
+        collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         })
     });

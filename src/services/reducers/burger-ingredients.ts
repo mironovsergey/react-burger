@@ -5,14 +5,32 @@ import {
     SET_CURRENT_CATEGORY
 } from '../actions/burger-ingredients';
 
-const initialState = {
+import type {
+    TBurgerIngredientsActions
+} from '../actions/burger-ingredients';
+
+import type {
+    TIngredient
+} from '../../utils/types';
+
+type TBurgerIngredientsState = {
+    ingredients: ReadonlyArray<TIngredient>;
+    ingredientsRequest: boolean;
+    ingredientsError: boolean;
+    currentCategory: string;
+};
+
+const initialState: TBurgerIngredientsState = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsError: false,
     currentCategory: 'bun'
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (
+    state = initialState,
+    action: TBurgerIngredientsActions
+): TBurgerIngredientsState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {

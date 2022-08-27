@@ -4,12 +4,24 @@ import {
     POST_RESET_PASSWORD_ERROR
 } from '../actions/reset-password-form';
 
-const initialState = {
+import type {
+    TResetPasswordActions
+} from '../actions/reset-password-form';
+
+type TResetPasswordFormState = {
+    resetPasswordRequest: boolean;
+    resetPasswordError: null | string;
+};
+
+const initialState: TResetPasswordFormState = {
     resetPasswordRequest: false,
     resetPasswordError: null
 };
 
-export const resetPasswordFormReducer = (state = initialState, action) => {
+export const resetPasswordFormReducer = (
+    state = initialState,
+    action: TResetPasswordActions
+): TResetPasswordFormState => {
     switch (action.type) {
         case POST_RESET_PASSWORD_REQUEST: {
             return {

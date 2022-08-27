@@ -4,12 +4,24 @@ import {
     POST_LOGIN_ERROR
 } from '../actions/login-form';
 
-const initialState = {
+import type {
+    TLoginActions
+} from '../actions/login-form';
+
+type TLoginFormState = {
+    loginRequest: boolean;
+    loginError: null | string;
+};
+
+const initialState: TLoginFormState = {
     loginRequest: false,
     loginError: null
 };
 
-export const loginFormReducer = (state = initialState, action) => {
+export const loginFormReducer = (
+    state = initialState,
+    action: TLoginActions
+): TLoginFormState => {
     switch (action.type) {
         case POST_LOGIN_REQUEST: {
             return {

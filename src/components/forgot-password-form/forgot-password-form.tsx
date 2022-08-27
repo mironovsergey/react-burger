@@ -1,13 +1,13 @@
-import type { FormEvent, ChangeEvent } from 'react';
+import type { FC, FormEvent, ChangeEvent } from 'react';
 
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
-import {
-    Input,
-    Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from '../../services/hooks';
+
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import Button from '../ui/button';
 
 import styles from './forgot-password-form.module.css';
 
@@ -17,12 +17,12 @@ type TForgotPasswordForm = {
     email: string;
 };
 
-const ForgotPasswordForm = () => {
+const ForgotPasswordForm: FC = () => {
     const {
         forgotPasswordRequest,
         forgotPasswordSuccess,
         forgotPasswordError
-    } = useSelector(({ forgotPasswordForm }: any) => forgotPasswordForm);
+    } = useSelector(({ forgotPasswordForm }) => forgotPasswordForm);
 
     const dispatch = useDispatch();
 
@@ -41,7 +41,6 @@ const ForgotPasswordForm = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(postForgotPassword(JSON.stringify(state)));
     };
 
@@ -77,7 +76,6 @@ const ForgotPasswordForm = () => {
             </div>
 
             <div className={`${styles.button}`}>
-                {/* @ts-ignore */}
                 <Button type="primary" size="medium" disabled={forgotPasswordRequest}>
                     {!forgotPasswordRequest ? 'Восстановить' : 'Восстановление....'}
                 </Button>

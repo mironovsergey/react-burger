@@ -1,8 +1,10 @@
+import type { FC } from 'react';
+
 import styles from './orders.module.css';
 
 import ProfileNav from '../../components/profile-nav/profile-nav';
 
-const Orders = () => {
+const Orders: FC = () => {
     return (
         <div className={styles.container}>
             <ProfileNav />

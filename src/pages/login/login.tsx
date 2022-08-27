@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 
@@ -5,9 +7,9 @@ import styles from './login.module.css';
 
 import LoginForm from '../../components/login-form/login-form';
 
-import { TLocationState } from '../../utils/types';
+import type { TLocationState } from '../../utils/types';
 
-const Login = () => {
+const Login: FC = () => {
     const { state } = useLocation<TLocationState>();
     const { user, userRequest } = useSelector(({ user }: any) => user);
 

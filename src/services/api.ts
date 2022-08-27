@@ -1,7 +1,7 @@
 import { apiUrl } from '../utils/constants';
 import { cookies } from './cookie';
 
-import {
+import type {
     TIngredientsResponse,
     TOrderResponse,
     TRegisterResponse,

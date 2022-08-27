@@ -1,4 +1,4 @@
-import { TCategory } from './types';
+import type { TCategory } from './types';
 
 export const apiUrl = 'https://norma.nomoreparties.space/api';
 

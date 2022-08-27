@@ -4,12 +4,24 @@ import {
     POST_REGISTER_ERROR
 } from '../actions/register-form';
 
-const initialState = {
+import type {
+    TRegisterActions
+} from '../actions/register-form';
+
+type TRegisterFormState = {
+    registerRequest: boolean;
+    registerError: null | string;
+};
+
+const initialState: TRegisterFormState = {
     registerRequest: false,
     registerError: null
 };
 
-export const registerFormReducer = (state = initialState, action) => {
+export const registerFormReducer = (
+    state = initialState,
+    action: TRegisterActions
+): TRegisterFormState => {
     switch (action.type) {
         case POST_REGISTER_REQUEST: {
             return {

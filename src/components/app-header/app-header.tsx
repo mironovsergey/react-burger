@@ -1,5 +1,8 @@
-import { useSelector, } from 'react-redux';
+import type { FC } from 'react';
+
 import { Link, NavLink, useLocation } from 'react-router-dom';
+
+import { useSelector } from '../../services/hooks';
 
 import {
     Logo,
@@ -10,9 +13,9 @@ import {
 
 import styles from './app-header.module.css';
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
     const { pathname } = useLocation();
-    const { user, userRequest } = useSelector(({ user }: any) => user);
+    const { user, userRequest } = useSelector(({ user }) => user);
 
     return (
         <header className={styles.component}>

@@ -1,30 +1,42 @@
 import {
-    POST_USER_REQUEST,
-    POST_USER_SUCCESS,
-    POST_USER_ERROR
+    PATCH_USER_REQUEST,
+    PATCH_USER_SUCCESS,
+    PATCH_USER_ERROR
 } from '../actions/profile-form';
 
-const initialState = {
-    profileRequest: false,
-    profileError: false,
+import type {
+    TProfileActions
+} from '../actions/profile-form';
+
+type TProfileFormState = {
+    profileRequest: boolean;
+    profileError: null | string;
 };
 
-export const profileFormReducer = (state = initialState, action) => {
+const initialState: TProfileFormState = {
+    profileRequest: false,
+    profileError: null
+};
+
+export const profileFormReducer = (
+    state = initialState,
+    action: TProfileActions
+): TProfileFormState => {
     switch (action.type) {
-        case POST_USER_REQUEST: {
+        case PATCH_USER_REQUEST: {
             return {
                 ...state,
                 profileRequest: true
             };
         }
-        case POST_USER_SUCCESS: {
+        case PATCH_USER_SUCCESS: {
             return {
                 ...state,
                 profileRequest: false,
                 profileError: null
             };
         }
-        case POST_USER_ERROR: {
+        case PATCH_USER_ERROR: {
             return {
                 ...state,
                 profileRequest: false,

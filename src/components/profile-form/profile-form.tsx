@@ -1,12 +1,12 @@
-import type { FormEvent, ChangeEvent, MouseEvent } from 'react';
+import type { FC, FormEvent, ChangeEvent, MouseEvent } from 'react';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
-import {
-    Input,
-    Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from '../../services/hooks';
+
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import Button from '../ui/button';
 
 import styles from './profile-form.module.css';
 
@@ -18,15 +18,15 @@ type TProfileForm = {
     password: string;
 };
 
-const ProfileForm = () => {
+const ProfileForm: FC = () => {
     const dispatch = useDispatch();
 
     const {
         profileRequest,
         profileError
-    } = useSelector(({ profileForm }: any) => profileForm);
+    } = useSelector(({ profileForm }) => profileForm);
 
-    const { user } = useSelector(({ user }: any) => user);
+    const { user } = useSelector(({ user }) => user);
 
     const initialState = useMemo(() => ({
         name: user?.name || '',
@@ -56,7 +56,6 @@ const ProfileForm = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(patchUser(JSON.stringify(state)));
     };
 
@@ -122,7 +121,6 @@ const ProfileForm = () => {
                         >
                             <span>Отмена</span>
                         </button>
-                        {/* @ts-ignore */}
                         <Button type="primary" size="medium" disabled={profileRequest}>
                             {!profileRequest ? 'Сохранить' : 'Сохранение....'}
                         </Button>

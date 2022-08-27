@@ -1,14 +1,14 @@
-import type { FormEvent, ChangeEvent } from 'react';
+import type { FC, FormEvent, ChangeEvent } from 'react';
 
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { useSelector, useDispatch } from '../../services/hooks';
+
 import { Link } from 'react-router-dom';
 
-import {
-    Input,
-    PasswordInput,
-    Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import Button from '../ui/button';
 
 import styles from './register-form.module.css';
 
@@ -20,11 +20,11 @@ type TRegisterForm = {
     password: string;
 };
 
-const RegisterForm = () => {
+const RegisterForm: FC = () => {
     const {
         registerRequest,
         registerError
-    } = useSelector(({ registerForm }: any) => registerForm);
+    } = useSelector(({ registerForm }) => registerForm);
 
     const dispatch = useDispatch();
 
@@ -45,7 +45,6 @@ const RegisterForm = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(postRegister(JSON.stringify(state)));
     };
 
@@ -90,7 +89,6 @@ const RegisterForm = () => {
             </div>
 
             <div className={`${styles.button}`}>
-                {/* @ts-ignore */}
                 <Button type="primary" size="medium" disabled={registerRequest}>
                     {!registerRequest ? 'Зарегистрироваться' : 'Регистрация....'}
                 </Button>

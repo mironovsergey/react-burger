@@ -6,14 +6,32 @@ import {
     RESET_ORDER
 } from '../actions/order-details';
 
-const initialState = {
+import type {
+    TOrderActions
+} from '../actions/order-details';
+
+import type {
+    TOrder
+} from '../../utils/types';
+
+type TOrderDetailsState = {
+    order: null | TOrder;
+    orderRequest: boolean;
+    orderError: boolean;
+    isOrderModalShown: boolean;
+};
+
+const initialState: TOrderDetailsState = {
     order: null,
     orderRequest: false,
     orderError: false,
     isOrderModalShown: false
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (
+    state = initialState,
+    action: TOrderActions
+): TOrderDetailsState => {
     switch (action.type) {
         case POST_ORDER_REQUEST: {
             return {
