@@ -1,6 +1,6 @@
 import { postResetPasswordRequest } from '../api';
 
-import type { AppThunk, AppDispatch } from '../../utils/types';
+import type { AppThunk } from '../../utils/types';
 
 export const POST_RESET_PASSWORD_REQUEST: 'POST_RESET_PASSWORD_REQUEST' = 'POST_RESET_PASSWORD_REQUEST';
 export const POST_RESET_PASSWORD_SUCCESS: 'POST_RESET_PASSWORD_SUCCESS' = 'POST_RESET_PASSWORD_SUCCESS';
@@ -39,7 +39,7 @@ export const postResetPasswordErrorAction = (payload: string): IPostResetPasswor
 
 // Сброс пароля
 export const postResetPassword = (payload: string): AppThunk => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch) => {
         dispatch(postResetPasswordRequestAction());
 
         postResetPasswordRequest(payload)

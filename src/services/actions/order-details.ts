@@ -1,6 +1,6 @@
 import { postOrderRequest } from '../api';
 
-import type { AppThunk, AppDispatch, TOrderNumber } from '../../utils/types';
+import type { AppThunk, TOrderNumber } from '../../utils/types';
 
 export const POST_ORDER_REQUEST: 'POST_ORDER_REQUEST' = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS: 'POST_ORDER_SUCCESS' = 'POST_ORDER_SUCCESS';
@@ -52,7 +52,7 @@ export const postOrderErrorAction = (): IPostOrderErrorAction => ({
 
 // Отправить заказ
 export const postOrder = (payload: string): AppThunk<Promise<void>> => {
-    return (dispatch: AppDispatch): Promise<void> => {
+    return (dispatch): Promise<void> => {
         dispatch(postOrderRequestAction());
 
         return postOrderRequest(payload)

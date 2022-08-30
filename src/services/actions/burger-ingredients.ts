@@ -1,6 +1,6 @@
 import { getIngredientsRequest } from '../api';
 
-import type { AppThunk, AppDispatch, TIngredient } from '../../utils/types';
+import type { AppThunk, TIngredient } from '../../utils/types';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -47,7 +47,7 @@ export const getIngredientsErrorAction = (): IGetIngredientsErrorAction => ({
 
 // Получить массив ингредиентов
 export const getIngredients = (): AppThunk => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch) => {
         dispatch(getIngredientsRequestAction());
 
         getIngredientsRequest()

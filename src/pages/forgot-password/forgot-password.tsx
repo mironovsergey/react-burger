@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import styles from './forgot-password.module.css';
@@ -11,7 +11,7 @@ import type { TLocationState } from '../../utils/types';
 
 const ForgotPassword: FC = () => {
     const { state } = useLocation<TLocationState>();
-    const { user, userRequest } = useSelector(({ user }: any) => user);
+    const { user, userRequest } = useSelector(({ user }) => user);
 
     if (userRequest) {
         return null;

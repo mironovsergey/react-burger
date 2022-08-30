@@ -1,7 +1,7 @@
 import { postLoginRequest } from '../api';
 import { cookies } from '../cookie';
 
-import type { AppThunk, AppDispatch } from '../../utils/types';
+import type { AppThunk } from '../../utils/types';
 
 import { setUser } from './user';
 
@@ -42,7 +42,7 @@ export const postLoginErrorAction = (payload: string): IPostLoginErrorAction => 
 
 // Авторизация пользователя
 export const postLogin = (payload: string): AppThunk => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch) => {
         dispatch(postLoginRequestAction());
 
         postLoginRequest(payload)

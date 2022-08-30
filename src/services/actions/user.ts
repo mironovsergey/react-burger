@@ -6,7 +6,7 @@ import {
 
 import { cookies } from '../cookie';
 
-import type { AppThunk, AppDispatch, TUser } from '../../utils/types';
+import type { AppThunk, TUser } from '../../utils/types';
 
 export const SET_USER: 'SET_USER' = 'SET_USER';
 
@@ -121,7 +121,7 @@ export const setUser = (payload: TUser): ISetUserAction => ({
 
 // Получение информации о пользователе
 export const getUser = (): AppThunk<Promise<void>> => {
-    return (dispatch: AppDispatch): Promise<void> => {
+    return (dispatch): Promise<void> => {
         dispatch(getUserRequestAction());
 
         return getUserRequest()
@@ -148,7 +148,7 @@ export const getUser = (): AppThunk<Promise<void>> => {
 
 // Обновление токена
 export const postToken = (): AppThunk<Promise<void>> => {
-    return (dispatch: AppDispatch): Promise<void> => {
+    return (dispatch): Promise<void> => {
         dispatch(postTokenRequestAction());
 
         return postTokenRequest()
@@ -170,7 +170,7 @@ export const postToken = (): AppThunk<Promise<void>> => {
 
 // Выход из системы
 export const postLogout = (): AppThunk => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch) => {
         dispatch(postLogoutRequestAction());
 
         postLogoutRequest()

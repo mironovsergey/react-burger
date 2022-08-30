@@ -1,7 +1,7 @@
 import { postRegisterRequest } from '../api';
 import { cookies } from '../cookie';
 
-import type { AppThunk, AppDispatch } from '../../utils/types';
+import type { AppThunk } from '../../utils/types';
 
 import { setUser } from './user';
 
@@ -42,7 +42,7 @@ export const postRegisterErrorAction = (payload: string): IPostRegisterErrorActi
 
 // Регистрация пользователя
 export const postRegister = (payload: string): AppThunk => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch) => {
         dispatch(postRegisterRequestAction());
 
         postRegisterRequest(payload)

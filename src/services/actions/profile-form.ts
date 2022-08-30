@@ -1,6 +1,6 @@
 import { patchUserRequest } from '../api';
 
-import type { AppThunk, AppDispatch } from '../../utils/types';
+import type { AppThunk } from '../../utils/types';
 
 import { setUser } from './user';
 
@@ -41,7 +41,7 @@ export const patchUserErrorAction = (payload: string): IPatchUserErrorAction => 
 
 // Обновление информации о пользователе
 export const patchUser = (payload: string): AppThunk => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch) => {
         dispatch(patchUserRequestAction());
 
         patchUserRequest(payload)

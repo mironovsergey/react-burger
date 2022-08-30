@@ -35,7 +35,8 @@ export const postOrderRequest = async (body: string): Promise<TOrderResponse> =>
     const response = await fetch(`${apiUrl}/orders`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': cookies.get('accessToken')
         },
         body
     });

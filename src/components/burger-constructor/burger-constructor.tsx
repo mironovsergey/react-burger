@@ -47,7 +47,7 @@ const BurgerConstructor: FC = () => {
         if (user) {
             dispatch(toggleOrderModal());
             dispatch(postOrder(JSON.stringify({
-                ingredients: [...ingredients.map(({ _id }) => _id), bun && bun._id]
+                ingredients: [...ingredients.map(({ _id }) => _id), bun && bun._id, bun && bun._id]
             }))).then(() => {
                 dispatch(resetConstructor());
             });

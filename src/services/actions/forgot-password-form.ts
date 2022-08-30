@@ -1,6 +1,6 @@
 import { postForgotPasswordRequest } from '../api';
 
-import type { AppThunk, AppDispatch } from '../../utils/types';
+import type { AppThunk } from '../../utils/types';
 
 export const POST_FORGOT_PASSWORD_REQUEST: 'POST_FORGOT_PASSWORD_REQUEST' = 'POST_FORGOT_PASSWORD_REQUEST';
 export const POST_FORGOT_PASSWORD_SUCCESS: 'POST_FORGOT_PASSWORD_SUCCESS' = 'POST_FORGOT_PASSWORD_SUCCESS';
@@ -39,7 +39,7 @@ export const postForgotPasswordErrorAction = (payload: string): IPostForgotPassw
 
 // Восстановление пароля
 export const postForgotPassword = (payload: string): AppThunk => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch) => {
         dispatch(postForgotPasswordRequestAction());
 
         postForgotPasswordRequest(payload)
