@@ -8,8 +8,12 @@ import ProfileForm from '../../components/profile-form/profile-form';
 const Profile: FC = () => {
     return (
         <div className={styles.container}>
-            <ProfileNav />
-            <ProfileForm />
+            <div className={`pt-30 pb-10`}>
+                <ProfileNav />
+            </div>
+            <div className={`pt-30 pb-10`}>
+                <ProfileForm />
+            </div>
         </div>
     );
 };

@@ -13,6 +13,7 @@ import { getUser } from '../../services/actions/user';
 import AppHeader from '../app-header/app-header';
 import ProtectedRoute from '../protected-route/protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderReceipt from '../order-receipt/order-receipt';
 import Modal from '../modal/modal';
 
 import {
@@ -23,7 +24,9 @@ import {
     ResetPassword,
     Profile,
     Orders,
+    Order,
     Feed,
+    FeedOrder,
     Ingredient,
     NotFound
 } from '../../pages';
@@ -71,8 +74,14 @@ const App: FC = () => {
                     <ProtectedRoute exact path="/profile/orders">
                         <Orders />
                     </ProtectedRoute>
+                    <ProtectedRoute exact path="/profile/orders/:id">
+                        <Order />
+                    </ProtectedRoute>
                     <Route exact path="/feed">
                         <Feed />
+                    </Route>
+                    <Route exact path="/feed/:id">
+                        <FeedOrder />
                     </Route>
                     <Route exact path="/ingredients/:id">
                         <Ingredient />
@@ -84,14 +93,30 @@ const App: FC = () => {
 
                 {
                     background && (
-                        <Route path="/ingredients/:id">
-                            <Modal
-                                title="Детали ингредиента"
-                                onClose={() => history.goBack()}
-                            >
-                                <IngredientDetails />
-                            </Modal>
-                        </Route>
+                        <>
+                            <Route path="/ingredients/:id">
+                                <Modal
+                                    title="Детали ингредиента"
+                                    onClose={() => history.goBack()}
+                                >
+                                    <IngredientDetails />
+                                </Modal>
+                            </Route>
+                            <Route path="/feed/:id">
+                                <Modal
+                                    onClose={() => history.goBack()}
+                                >
+                                    <OrderReceipt />
+                                </Modal>
+                            </Route>
+                            <Route path="/profile/orders/:id">
+                                <Modal
+                                    onClose={() => history.goBack()}
+                                >
+                                    <OrderReceipt />
+                                </Modal>
+                            </Route>
+                        </>
                     )
                 }
             </main>

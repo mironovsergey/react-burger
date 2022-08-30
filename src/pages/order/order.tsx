@@ -4,15 +4,14 @@ import { useEffect } from 'react';
 import { useDispatch } from '../../services/hooks';
 import { getAccessToken } from '../../utils/helpers';
 
-import styles from './orders.module.css';
+import styles from './order.module.css';
 
 import { wsConnectionStart, wsConnectionStop } from '../../services/actions/ws';
 import { wsUrl } from '../../utils/constants';
 
-import ProfileNav from '../../components/profile-nav/profile-nav';
-import OrderList from '../../components/order-list/order-list';
+import OrderReceipt from '../../components/order-receipt/order-receipt';
 
-const Orders: FC = () => {
+const Order: FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,14 +24,9 @@ const Orders: FC = () => {
 
     return (
         <div className={styles.container}>
-            <div className={`pt-30 pb-10`}>
-                <ProfileNav />
-            </div>
-            <div className={`pt-10 pb-10`}>
-                <OrderList />
-            </div>
+            <OrderReceipt />
         </div>
     );
 };
 
-export default Orders;
+export default Order;

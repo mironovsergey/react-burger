@@ -11,9 +11,10 @@ import type { TResetPasswordActions } from '../services/actions/reset-password-f
 import type { TProfileActions } from '../services/actions/profile-form';
 import type { TUserActions } from '../services/actions/user';
 import type { TOrderActions } from '../services/actions/order-details';
+import type { TWSActions } from '../services/actions/ws';
 
 // Типизация всех экшенов приложения
-type TAppActions =
+export type TAppActions =
     | TBurgerIngredientsActions
     | TBurgerConstructorActions
     | TLoginActions
@@ -22,7 +23,8 @@ type TAppActions =
     | TResetPasswordActions
     | TProfileActions
     | TUserActions
-    | TOrderActions;
+    | TOrderActions
+    | TWSActions;
 
 // Типизация описания хранилища
 export type RootState = ReturnType<typeof store.getState>;
@@ -68,14 +70,14 @@ export type TIngredientsResponse = {
     data: TIngredient[];
 };
 
-export type TOrder = {
+export type TOrderNumber = {
     number: number;
 };
 
 export type TOrderResponse = {
     success: boolean;
     name: string;
-    order: TOrder;
+    order: TOrderNumber;
 };
 
 export type TUser = {
@@ -121,4 +123,31 @@ export type TForgotPasswordResponse = {
 export type TResetPasswordResponse = {
     success: boolean;
     message: string;
+};
+
+export enum StatusCodes {
+    created = 'created',
+    pending = 'pending',
+    done = 'done'
+}
+
+export type TOrder = {
+    readonly ingredients: ReadonlyArray<string>;
+    readonly _id: string;
+    readonly status: StatusCodes;
+    readonly number: number;
+    readonly createdAt: string;
+    readonly updatedAt: string;
+    readonly name: string;
+};
+
+export type TWSMessage = {
+    readonly success: boolean;
+    readonly orders: ReadonlyArray<TOrder>;
+    readonly total: number;
+    readonly totalToday: number;
+};
+
+export type TParams = {
+    id: string;
 };

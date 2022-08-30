@@ -7,11 +7,7 @@ import { useSelector } from '../../services/hooks';
 
 import styles from './ingredient-details.module.css';
 
-import type { TIngredient } from '../../utils/types';
-
-type TParams = {
-    id: string;
-};
+import type { TParams, TIngredient } from '../../utils/types';
 
 const IngredientDetails: FC = () => {
     const { id } = useParams<TParams>();

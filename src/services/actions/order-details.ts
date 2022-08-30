@@ -1,6 +1,6 @@
 import { postOrderRequest } from '../api';
 
-import type { AppThunk, AppDispatch, TOrder } from '../../utils/types';
+import type { AppThunk, AppDispatch, TOrderNumber } from '../../utils/types';
 
 export const POST_ORDER_REQUEST: 'POST_ORDER_REQUEST' = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS: 'POST_ORDER_SUCCESS' = 'POST_ORDER_SUCCESS';
@@ -15,7 +15,7 @@ export interface IPostOrderRequestAction {
 
 export interface IPostOrderSuccessAction {
     readonly type: typeof POST_ORDER_SUCCESS;
-    readonly payload: TOrder;
+    readonly payload: TOrderNumber;
 }
 
 export interface IPostOrderErrorAction {
@@ -41,7 +41,7 @@ export const postOrderRequestAction = (): IPostOrderRequestAction => ({
     type: POST_ORDER_REQUEST
 });
 
-export const postOrderSuccessAction = (payload: TOrder): IPostOrderSuccessAction => ({
+export const postOrderSuccessAction = (payload: TOrderNumber): IPostOrderSuccessAction => ({
     type: POST_ORDER_SUCCESS,
     payload
 });

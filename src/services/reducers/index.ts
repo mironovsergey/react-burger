@@ -8,6 +8,7 @@ import { profileFormReducer } from './profile-form';
 import { forgotPasswordFormReducer } from './forgot-password-form';
 import { resetPasswordFormReducer } from './reset-password-form';
 import { userReducer } from './user';
+import { wsReducer } from './ws';
 
 export const rootReducer = combineReducers({
     burgerIngredients: burgerIngredientsReducer,
@@ -18,5 +19,6 @@ export const rootReducer = combineReducers({
     profileForm: profileFormReducer,
     forgotPasswordForm: forgotPasswordFormReducer,
     resetPasswordForm: resetPasswordFormReducer,
-    user: userReducer
+    user: userReducer,
+    ws: wsReducer
 });

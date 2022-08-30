@@ -11,11 +11,11 @@ import type {
 } from '../actions/order-details';
 
 import type {
-    TOrder
+    TOrderNumber
 } from '../../utils/types';
 
 type TOrderDetailsState = {
-    order: null | TOrder;
+    order: null | TOrderNumber;
     orderRequest: boolean;
     orderError: boolean;
     isOrderModalShown: boolean;

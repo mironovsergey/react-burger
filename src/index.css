@@ -40,3 +40,15 @@
     width: 100%;
     height: 100%;
 }
+
+.cols_1 {
+    grid-template-columns: repeat(1, auto);
+}
+
+.cols_2 {
+    grid-template-columns: repeat(2, auto);
+}
+
+.cols_3 {
+    grid-template-columns: repeat(3, auto);
+}
