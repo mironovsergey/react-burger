@@ -3,14 +3,11 @@ import type { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 
-import {
-    Counter,
-    CurrencyIcon
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-ingredients-item.module.css';
 
-import { TIngredient } from '../../utils/types';
+import type { TIngredient } from '../../utils/types';
 
 type TBurgerIngredientsItem = {
     ingredient: TIngredient,

@@ -1,0 +1,31 @@
+.component {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    grid-column-gap: calc(var(--offset-base-size) * 9);
+    grid-row-gap: calc(var(--offset-base-size) * 15);
+}
+
+.order_numbers {
+    grid-column: auto;
+}
+
+.order_numbers_list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(10, auto);
+    grid-column-gap: calc(var(--offset-base-size) * 2);
+    grid-row-gap: calc(var(--offset-base-size) * 2);
+}
+
+.order_total {
+    grid-column: 1 / span 2;
+}
+
+.order_total_title {}
+
+.order_total_value {
+    text-shadow: 0 0 16px rgba(51, 51, 255, 0.25),
+        0 0 8px rgba(51, 51, 255, 0.25),
+        0 4px 32px rgba(51, 51, 255, 0.5);
+}

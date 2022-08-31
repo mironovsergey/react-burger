@@ -1,13 +1,16 @@
+import type { FC } from 'react';
+
 import { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 
-import {
-    ConstructorElement,
-    CurrencyIcon,
-    Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from '../../services/hooks';
+
+import type { TIngredient } from '../../utils/types';
+
+import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import Button from '../ui/button';
 
 import styles from './burger-constructor.module.css';
 
@@ -18,37 +21,33 @@ import BurgerConstructorItem from '../burger-constructor-item/burger-constructor
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
 
-import { TConstructorIngredient } from '../../utils/types';
-
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [{ isHover }, dropRef] = useDrop({
+    const [{ isHover }, dropRef] = useDrop<
+        TIngredient,
+        void,
+        { isHover: boolean }
+    >({
         accept: 'ingredientsItem',
         collect: (monitor) => ({
             isHover: monitor.isOver()
         }),
-        drop(ingredient) {
+        drop(ingredient: TIngredient) {
             dispatch(addIngredient(ingredient));
         },
     });
 
-    const { user } = useSelector(({ user }: any) => user);
-
-    const { bun, ingredients }: {
-        bun: TConstructorIngredient,
-        ingredients: TConstructorIngredient[]
-    } = useSelector(({ burgerConstructor }: any) => burgerConstructor);
-
-    const { isOrderModalShown } = useSelector(({ orderDetails }: any) => orderDetails);
+    const { user } = useSelector(({ user }) => user);
+    const { bun, ingredients } = useSelector(({ burgerConstructor }) => burgerConstructor);
+    const { isOrderModalShown } = useSelector(({ orderDetails }) => orderDetails);
 
     const handleOrderModalShow = () => {
         if (user) {
             dispatch(toggleOrderModal());
-            // @ts-ignore
             dispatch(postOrder(JSON.stringify({
-                ingredients: [...ingredients.map(({ _id }) => _id), bun._id]
+                ingredients: [...ingredients.map(({ _id }) => _id), bun && bun._id, bun && bun._id]
             }))).then(() => {
                 dispatch(resetConstructor());
             });
@@ -131,7 +130,6 @@ const BurgerConstructor = () => {
                     </span>
                     <CurrencyIcon type="primary" />
                 </div>
-                {/* @ts-ignore */}
                 <Button type="primary" size="large"
                     disabled={!(bun && ingredients.length)}
                     onClick={handleOrderModalShow}>

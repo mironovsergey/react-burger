@@ -1,15 +1,17 @@
-import { useSelector } from 'react-redux';
+import type { FC } from 'react';
+
+import { useSelector } from '../../services/hooks';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import styles from './reset-password.module.css';
 
 import ResetPasswordForm from '../../components/reset-password-form/reset-password-form';
 
-import { TLocationState } from '../../utils/types';
+import type { TLocationState } from '../../utils/types';
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
     const { state } = useLocation<TLocationState>();
-    const { user, userRequest } = useSelector(({ user }: any) => user);
+    const { user, userRequest } = useSelector(({ user }) => user);
 
     if (userRequest) {
         return null;

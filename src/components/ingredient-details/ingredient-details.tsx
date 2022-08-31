@@ -1,21 +1,17 @@
+import type { FC } from 'react';
+
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
+import { useSelector } from '../../services/hooks';
 
 import styles from './ingredient-details.module.css';
 
-import { TIngredient } from '../../utils/types';
+import type { TParams, TIngredient } from '../../utils/types';
 
-type TParams = {
-    id: string;
-};
-
-const IngredientDetails = () => {
+const IngredientDetails: FC = () => {
     const { id } = useParams<TParams>();
-
-    const {
-        ingredients
-    } = useSelector(({ burgerIngredients }: any) => burgerIngredients);
+    const { ingredients } = useSelector(({ burgerIngredients }) => burgerIngredients);
 
     const currentIngredient = useMemo(() => (
         ingredients.find((item: TIngredient) => item._id === id)

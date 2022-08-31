@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import './index.css';
 
-import store from './services/store';
+import { store } from './services/store';
 
 import App from './components/app/app';
 
@@ -15,10 +15,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <Router>
-        <React.StrictMode>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </React.StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
     </Router>
 );

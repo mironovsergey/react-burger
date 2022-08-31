@@ -1,18 +1,18 @@
-import type { MouseEvent } from 'react';
+import type { FC, MouseEvent } from 'react';
 
-import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
+import { useDispatch } from '../../services/hooks';
 
 import styles from './profile-nav.module.css';
 
 import { postLogout } from '../../services/actions/user';
 
-const ProfileNav = () => {
+const ProfileNav: FC = () => {
     const dispatch = useDispatch();
 
     const handleLogout = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(postLogout());
     };
 

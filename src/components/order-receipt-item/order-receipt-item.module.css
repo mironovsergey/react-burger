@@ -1,0 +1,17 @@
+.component {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--offset-base-size) * 4);
+}
+
+.image {}
+
+.name {
+    flex-grow: 1;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}

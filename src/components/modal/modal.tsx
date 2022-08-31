@@ -3,9 +3,7 @@ import type { FC, ReactNode } from 'react';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import {
-    CloseIcon
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './modal.module.css';
 

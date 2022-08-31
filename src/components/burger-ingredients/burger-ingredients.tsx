@@ -1,9 +1,10 @@
-import type { FC, ReactNode, UIEvent } from 'react';
+import type { FC, UIEvent } from 'react';
 
 import { useCallback, useMemo, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
-import { Tab as TabUI } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from '../../services/hooks';
+
+import Tab from '../ui/tab';
 
 import styles from './burger-ingredients.module.css';
 
@@ -12,20 +13,11 @@ import { setCurrentCategory } from '../../services/actions/burger-ingredients';
 
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 
-import { TIngredient, TConstructorIngredient } from '../../utils/types';
-
 type TIngredientCount = {
     [key: string]: number;
 };
 
-const Tab: FC<{
-    active: boolean;
-    value: string;
-    onClick: (value: string) => void;
-    children: ReactNode;
-}> = TabUI;
-
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
     const dispatch = useDispatch();
 
     const {
@@ -33,20 +25,12 @@ const BurgerIngredients = () => {
         ingredientsRequest,
         ingredientsError,
         currentCategory
-    }: {
-        ingredients: TIngredient[],
-        ingredientsRequest: boolean,
-        ingredientsError: boolean,
-        currentCategory: string
-    } = useSelector(({ burgerIngredients }: any) => burgerIngredients);
+    } = useSelector(({ burgerIngredients }) => burgerIngredients);
 
     const {
         bun: constructorBun,
         ingredients: constructorIngredients
-    }: {
-        bun: TConstructorIngredient,
-        ingredients: TConstructorIngredient[]
-    } = useSelector(({ burgerConstructor }: any) => burgerConstructor);
+    } = useSelector(({ burgerConstructor }) => burgerConstructor);
 
     // Ref-объект блока ингредиентов
     const panelRef = useRef<HTMLDivElement>(null);

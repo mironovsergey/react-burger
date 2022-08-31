@@ -1,14 +1,14 @@
-import type { FormEvent, ChangeEvent } from 'react';
+import type { FC, FormEvent, ChangeEvent } from 'react';
 
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { useSelector, useDispatch } from '../../services/hooks';
+
 import { Link, Redirect } from 'react-router-dom';
 
-import {
-    Input,
-    PasswordInput,
-    Button
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import Button from '../ui/button';
 
 import styles from './reset-password-form.module.css';
 
@@ -19,15 +19,15 @@ type TResetPasswordForm = {
     token: string;
 };
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm: FC = () => {
     const {
         forgotPasswordSuccess
-    } = useSelector(({ forgotPasswordForm }: any) => forgotPasswordForm);
+    } = useSelector(({ forgotPasswordForm }) => forgotPasswordForm);
 
     const {
         resetPasswordRequest,
         resetPasswordError
-    } = useSelector(({ resetPasswordForm }: any) => resetPasswordForm);
+    } = useSelector(({ resetPasswordForm }) => resetPasswordForm);
 
     const dispatch = useDispatch();
 
@@ -47,7 +47,6 @@ const ResetPasswordForm = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(postResetPassword(JSON.stringify(state)));
     };
 
@@ -93,7 +92,6 @@ const ResetPasswordForm = () => {
             </div>
 
             <div className={`${styles.button}`}>
-                {/* @ts-ignore */}
                 <Button type="primary" size="medium" disabled={resetPasswordRequest}>
                     {!resetPasswordRequest ? 'Сохранить' : 'Сохранение....'}
                 </Button>

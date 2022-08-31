@@ -1,6 +1,9 @@
+import type { FC } from 'react';
+
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+
+import { useDispatch } from '../../services/hooks';
 
 import styles from './app.module.css';
 
@@ -10,6 +13,7 @@ import { getUser } from '../../services/actions/user';
 import AppHeader from '../app-header/app-header';
 import ProtectedRoute from '../protected-route/protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderReceipt from '../order-receipt/order-receipt';
 import Modal from '../modal/modal';
 
 import {
@@ -20,7 +24,9 @@ import {
     ResetPassword,
     Profile,
     Orders,
+    Order,
     Feed,
+    FeedOrder,
     Ingredient,
     NotFound
 } from '../../pages';
@@ -31,16 +37,14 @@ type TLocationState = {
     background: Location;
 };
 
-const App = () => {
+const App: FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation<TLocationState>();
     const background = location.state && location.state.background;
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getIngredients());
-        // @ts-ignore
         dispatch(getUser());
     }, [dispatch]);
 
@@ -70,8 +74,14 @@ const App = () => {
                     <ProtectedRoute exact path="/profile/orders">
                         <Orders />
                     </ProtectedRoute>
+                    <ProtectedRoute exact path="/profile/orders/:id">
+                        <Order />
+                    </ProtectedRoute>
                     <Route exact path="/feed">
                         <Feed />
+                    </Route>
+                    <Route exact path="/feed/:id">
+                        <FeedOrder />
                     </Route>
                     <Route exact path="/ingredients/:id">
                         <Ingredient />
@@ -83,14 +93,30 @@ const App = () => {
 
                 {
                     background && (
-                        <Route path="/ingredients/:id">
-                            <Modal
-                                title="Детали ингредиента"
-                                onClose={() => history.goBack()}
-                            >
-                                <IngredientDetails />
-                            </Modal>
-                        </Route>
+                        <>
+                            <Route path="/ingredients/:id">
+                                <Modal
+                                    title="Детали ингредиента"
+                                    onClose={() => history.goBack()}
+                                >
+                                    <IngredientDetails />
+                                </Modal>
+                            </Route>
+                            <Route path="/feed/:id">
+                                <Modal
+                                    onClose={() => history.goBack()}
+                                >
+                                    <OrderReceipt />
+                                </Modal>
+                            </Route>
+                            <Route path="/profile/orders/:id">
+                                <Modal
+                                    onClose={() => history.goBack()}
+                                >
+                                    <OrderReceipt />
+                                </Modal>
+                            </Route>
+                        </>
                     )
                 }
             </main>

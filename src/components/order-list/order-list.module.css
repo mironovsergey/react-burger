@@ -1,0 +1,18 @@
+.component {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.panel {
+    composes: panel from global;
+}
+
+.panel_outer {
+    composes: panel_outer from global;
+}
+
+.panel_inner {
+    composes: panel_inner from global;
+    row-gap: calc(var(--offset-base-size) * 4);
+}

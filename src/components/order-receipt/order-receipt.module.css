@@ -1,0 +1,43 @@
+.component {
+    max-width: 640px;
+    width: 100%;
+}
+
+.head {}
+
+.number {
+    text-align: center;
+}
+
+.name {}
+
+.status {}
+
+.body {}
+
+.panel {
+    composes: panel from global;
+    height: 312px;
+}
+
+.panel_outer {
+    composes: panel_outer from global;
+}
+
+.panel_inner {
+    composes: panel_inner from global;
+    row-gap: calc(var(--offset-base-size) * 4);
+}
+
+.foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.datetime {}
+
+.price {
+    display: flex;
+    align-items: center;
+}
