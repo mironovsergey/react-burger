@@ -29,7 +29,7 @@ type TUserState = {
     logoutError: boolean;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
     user: null,
     userRequest: false,
     userError: false,

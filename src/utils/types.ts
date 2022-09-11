@@ -134,7 +134,7 @@ export enum StatusCodes {
 export type TOrder = {
     readonly ingredients: ReadonlyArray<string>;
     readonly _id: string;
-    readonly status: StatusCodes;
+    readonly status: string | StatusCodes;
     readonly number: number;
     readonly createdAt: string;
     readonly updatedAt: string;

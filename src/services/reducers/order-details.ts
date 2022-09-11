@@ -21,7 +21,7 @@ type TOrderDetailsState = {
     isOrderModalShown: boolean;
 };
 
-const initialState: TOrderDetailsState = {
+export const initialState: TOrderDetailsState = {
     order: null,
     orderRequest: false,
     orderError: false,
@@ -65,7 +65,7 @@ export const orderDetailsReducer = (
                 ...state,
                 order: null,
                 orderRequest: false,
-                orderError: false,
+                orderError: false
             };
         }
         default: {

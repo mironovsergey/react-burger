@@ -14,7 +14,7 @@ type TForgotPasswordFormState = {
     forgotPasswordError: null | string;
 };
 
-const initialState: TForgotPasswordFormState = {
+export const initialState: TForgotPasswordFormState = {
     forgotPasswordRequest: false,
     forgotPasswordSuccess: false,
     forgotPasswordError: null
