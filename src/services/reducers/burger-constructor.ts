@@ -18,7 +18,7 @@ type TBurgerConstructorState = {
     ingredients: ReadonlyArray<TConstructorIngredient>;
 };
 
-const initialState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
     bun: null,
     ingredients: []
 };

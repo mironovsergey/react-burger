@@ -13,7 +13,7 @@ type TProfileFormState = {
     profileError: null | string;
 };
 
-const initialState: TProfileFormState = {
+export const initialState: TProfileFormState = {
     profileRequest: false,
     profileError: null
 };

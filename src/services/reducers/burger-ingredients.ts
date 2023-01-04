@@ -20,7 +20,7 @@ type TBurgerIngredientsState = {
     currentCategory: string;
 };
 
-const initialState: TBurgerIngredientsState = {
+export const initialState: TBurgerIngredientsState = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsError: false,

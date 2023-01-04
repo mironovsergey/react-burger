@@ -13,7 +13,7 @@ type TRegisterFormState = {
     registerError: null | string;
 };
 
-const initialState: TRegisterFormState = {
+export const initialState: TRegisterFormState = {
     registerRequest: false,
     registerError: null
 };

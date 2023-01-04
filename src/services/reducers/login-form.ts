@@ -13,7 +13,7 @@ type TLoginFormState = {
     loginError: null | string;
 };
 
-const initialState: TLoginFormState = {
+export const initialState: TLoginFormState = {
     loginRequest: false,
     loginError: null
 };
